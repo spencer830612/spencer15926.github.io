@@ -32,8 +32,7 @@ date: 2024-06-26 17:42:08
 
 我反安裝：`pip uninstall PPOCRLabel`，因為我想要用 whl 安裝的方式。
 
-
-### 第三步
+### 第五步
 
 ```cmd
 cd ./PPOCRLabel 
@@ -44,11 +43,11 @@ pip install dist/看這個資料夾裡出現的那個檔名
 
 ```
 
-### 第四步
+### 第六步
 
 中間跳出缺少什麼相依，就安裝
 
-### 第五步
+### 第七步
 
 這時一直跳出 `ImportError: numpy.core.multiarray failed to import`，但是我重新安裝 numpy 也沒用，這時我只好重新安裝 opencv-python，但是在安裝時看到下面的訊息：
 
@@ -64,7 +63,7 @@ pip install numpy<2.0.0
 ```
 可以了，終於前進到下一個錯誤了
 
-### 第六步
+### 第八步
 
 ```cmd
 Traceback (most recent call last):
@@ -90,12 +89,12 @@ AttributeError: 'Namespace' object has no attribute 'return_word_box'
 
 然後根據[這裡](<https://github.com/PaddlePaddle/PaddleOCR/issues/11166>)的說明，是 paddleocr 版本太新的緣故，試著安裝 2.6.0 版本，解決了
 
-### 第七步
+### 第九步
 
 你可能會遇到 `Microsoft Visual C++ 14.0 is required. Get it with “Microsoft Visual C   Build Tools`，你需要執行：
 `conda install libpython m2w64-toolchain -c msys2`。什麼去找 build-tools 的都沒用，[我覺得裡面講的也很有道理，可以去看看](<https://blog.csdn.net/qzzzxiaosheng/article/details/125119006>)。
 
-### 第八步
+### 第十步
 
 在此資料夾裡執行 `python PPOCRLabel.py `，遇到問題：
 
