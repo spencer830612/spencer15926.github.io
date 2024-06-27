@@ -4,15 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Archives | Spencer 的地方</title>
+  <title>今日工作心得 | Spencer 的地方</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="練習輸出、展示結果的地方">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Spencer 的地方">
-<meta property="og:url" content="http://spencer830612.github.io/archives/index.html">
+  <meta name="description" content="我真的覺得濫用靜態變數真的會造成偵錯的災難……當然，我負責的 App 習慣只用一個 activity 就負責所有頁面的內容，但是因為不同人接手，再加上沒有交接習慣的緣故，因此容易有重工的情形。 全部是靜態變數（static variable），因此我非常難知道這個變數是為何而變，我必須要在可能的入口全部埋一次偵錯日誌，再透過二分法慢慢篩出真正的入口。 我希望自己做程式時可以辦到：  不濫用靜態變數">
+<meta property="og:type" content="article">
+<meta property="og:title" content="今日工作心得">
+<meta property="og:url" content="http://spencer830612.github.io/20240626/1620941357/index.html">
 <meta property="og:site_name" content="Spencer 的地方">
-<meta property="og:description" content="練習輸出、展示結果的地方">
+<meta property="og:description" content="我真的覺得濫用靜態變數真的會造成偵錯的災難……當然，我負責的 App 習慣只用一個 activity 就負責所有頁面的內容，但是因為不同人接手，再加上沒有交接習慣的緣故，因此容易有重工的情形。 全部是靜態變數（static variable），因此我非常難知道這個變數是為何而變，我必須要在可能的入口全部埋一次偵錯日誌，再透過二分法慢慢篩出真正的入口。 我希望自己做程式時可以辦到：  不濫用靜態變數">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-06-26T06:34:26.000Z">
+<meta property="article:modified_time" content="2024-06-26T06:49:13.833Z">
 <meta property="article:author" content="Spencer Dai">
 <meta name="twitter:card" content="summary">
   
@@ -73,77 +75,71 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2024" class="archive-year">2024</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/20240626/1718242579/" class="archive-article-date">
-  <time class="dt-published" datetime="2024-06-26T09:42:08.000Z" itemprop="datePublished">Jun 26</time>
+        <section id="main"><article id="post-20240626-work-thought" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/20240626/1620941357/" class="article-date">
+  <time class="dt-published" datetime="2024-06-26T06:34:26.000Z" itemprop="datePublished">2024-06-26</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/20240626/1718242579/">想利用 ppocrlabel 做圖像訓練的前置步驟</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      今日工作心得
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/20240626/1620941357/" class="archive-article-date">
-  <time class="dt-published" datetime="2024-06-26T06:34:26.000Z" itemprop="datePublished">Jun 26</time>
-</a>
+    <div class="e-content article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/20240626/1620941357/">今日工作心得</a>
-    </h1>
-  
+        <p>我真的覺得濫用靜態變數真的會造成偵錯的災難……當然，我負責的 App 習慣只用一個 activity 就負責所有頁面的內容，但是因為不同人接手，再加上沒有交接習慣的緣故，因此容易有重工的情形。</p>
+<p>全部是靜態變數（static variable），因此我非常難知道這個變數是為何而變，我必須要在可能的入口全部埋一次偵錯日誌，再透過二分法慢慢篩出真正的入口。</p>
+<p>我希望自己做程式時可以辦到：</p>
+<ul>
+<li><p>不濫用靜態變數：靜態變數只用在常數。在設計時，就要先考慮好這些需要傳遞變數的情形，不要用靜態變數迴避此問題。</p>
+</li>
+<li><p>不要為了省變數個數而重複使用：原先的 App 會為了達到此目的，把不同意義的內容用同個變數去承載；再加上靜態變數的濫用問題，導致寫程式與維護上更令人崩潰。</p>
+</li>
+</ul>
+<p>我最近加入了程人頻道，發現裡面有前人整理的面試秘笈，希望我能有效吸收、找到更好的工作！</p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/20240625/1243066710/" class="archive-article-date">
-  <time class="dt-published" datetime="2024-06-25T07:05:17.177Z" itemprop="datePublished">Jun 25</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/20240625/1243066710/">首頁</a>
-    </h1>
-  
-
-    </header>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://spencer830612.github.io/20240626/1620941357/" data-id="clxwu70rg0001402e2ltxam85" data-title="今日工作心得" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/20240626/1718242579/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          想利用 ppocrlabel 做圖像訓練的前置步驟
+        
+      </div>
+    </a>
+  
+  
+    <a href="/20240625/1243066710/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">首頁</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 
 </section>

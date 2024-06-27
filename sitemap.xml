@@ -2,6 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://spencer830612.github.io/20240626/1718242579/</loc>
+    
+    <lastmod>2024-06-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://spencer830612.github.io/about/index.html</loc>
+    
+    <lastmod>2024-06-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://spencer830612.github.io/20240626/1620941357/</loc>
+    
+    <lastmod>2024-06-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://spencer830612.github.io/tags/index.html</loc>
+    
+    <lastmod>2024-06-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://spencer830612.github.io/20240625/1243066710/</loc>
     
     <lastmod>2024-06-25</lastmod>
@@ -13,11 +49,32 @@
 
   <url>
     <loc>http://spencer830612.github.io/</loc>
-    <lastmod>2024-06-25</lastmod>
+    <lastmod>2024-06-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
+  
+  <url>
+    <loc>http://spencer830612.github.io/tags/ppocrlabel/</loc>
+    <lastmod>2024-06-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://spencer830612.github.io/tags/paddlepaddle/</loc>
+    <lastmod>2024-06-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://spencer830612.github.io/tags/tensorFlowLite/</loc>
+    <lastmod>2024-06-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
 
   

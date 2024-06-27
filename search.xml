@@ -1,9 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>今日工作心得</title>
+    <url>/20240626/1620941357/</url>
+    <content><![CDATA[<p>我真的覺得濫用靜態變數真的會造成偵錯的災難……當然，我負責的 App 習慣只用一個 activity 就負責所有頁面的內容，但是因為不同人接手，再加上沒有交接習慣的緣故，因此容易有重工的情形。</p>
+<p>全部是靜態變數（static variable），因此我非常難知道這個變數是為何而變，我必須要在可能的入口全部埋一次偵錯日誌，再透過二分法慢慢篩出真正的入口。</p>
+<p>我希望自己做程式時可以辦到：</p>
+<ul>
+<li><p>不濫用靜態變數：靜態變數只用在常數。在設計時，就要先考慮好這些需要傳遞變數的情形，不要用靜態變數迴避此問題。</p>
+</li>
+<li><p>不要為了省變數個數而重複使用：原先的 App 會為了達到此目的，把不同意義的內容用同個變數去承載；再加上靜態變數的濫用問題，導致寫程式與維護上更令人崩潰。</p>
+</li>
+</ul>
+<p>我最近加入了程人頻道，發現裡面有前人整理的面試秘笈，希望我能有效吸收、找到更好的工作！</p>
+]]></content>
+  </entry>
+  <entry>
     <title>首頁</title>
     <url>/20240625/1243066710/</url>
     <content><![CDATA[<p>要練習輸出想法</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>想利用 ppocrlabel 做圖像訓練的前置步驟</title>
+    <url>/20240626/1718242579/</url>
+    <content><![CDATA[<p>原本公司想要用影像去辨識七段顯示器，剛好網路上看到有可以用的<a href="https://github.com/renjithsasidharan/seven-segment-ocr">連結</a>，於是開始了前途多舛的時間，然後還沒好 Orz.</p>
+<h2 id="開始"><a href="#開始" class="headerlink" title="開始"></a>開始</h2><h3 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h3><p>首先你去用個 miniConda 用個獨立的環境，以免被相依性搞到掛掉。</p>
+<h3 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h3><p>執行 <code>python3 -m pip install paddlepaddle -i https://mirror.baidu.com/pypi/simple</code>，我就照著步驟安裝</p>
+<h3 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h3><p>執行 <code>pip install PPOCRLabel</code>，就可以先安裝需要的相依性套件。如果跳出錯誤，就照他的安裝，例如：</p>
+<ul>
+<li>可能會遇到 <code>gcc: error: /FIPython.h: File o directory non esistente</code> 的錯誤訊息，網路搜尋後可能是 <code>lmdb</code> 的問題，因此我執行：<br><code>conda install -c conda-forge python-lmdb</code></li>
+</ul>
+<h3 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h3><p>我反安裝：<code>pip uninstall PPOCRLabel</code>，因為我想要用 whl 安裝的方式。</p>
+<h3 id="第三步-1"><a href="#第三步-1" class="headerlink" title="第三步"></a>第三步</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ./PPOCRLabel </span><br><span class="line">反正就是這個資料夾</span><br><span class="line"></span><br><span class="line">python setup.py bdist_wheel</span><br><span class="line">pip install dist/看這個資料夾裡出現的那個檔名</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="第四步-1"><a href="#第四步-1" class="headerlink" title="第四步"></a>第四步</h3><p>中間跳出缺少什麼相依，就安裝</p>
+<h3 id="第五步"><a href="#第五步" class="headerlink" title="第五步"></a>第五步</h3><p>這時一直跳出 <code>ImportError: numpy.core.multiarray failed to import</code>，但是我重新安裝 numpy 也沒用，這時我只好重新安裝 opencv-python，但是在安裝時看到下面的訊息：</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="function">ERROR: <span class="title">pip</span>&#x27;<span class="title">s</span> <span class="title">dependency</span> <span class="title">resolver</span> <span class="title">does</span> <span class="title">not</span> <span class="title">currently</span> <span class="title">take</span> <span class="title">into</span> <span class="title">account</span> <span class="title">all</span> <span class="title">the</span> <span class="title">packages</span> <span class="title">that</span> <span class="title">are</span> <span class="title">installed</span>. <span class="title">This</span> <span class="title">behaviour</span> <span class="title">is</span> <span class="title">the</span> <span class="title">source</span> <span class="title">of</span> <span class="title">the</span> <span class="title">following</span> <span class="title">dependency</span> <span class="title">conflicts</span>.</span></span><br><span class="line"><span class="function"><span class="title">paddleocr</span> 2.7.3 <span class="title">requires</span> <span class="title">opencv</span>-<span class="title">python</span>&lt;=4.6.0.66, <span class="title">but</span> <span class="title">you</span> <span class="title">have</span> <span class="title">opencv</span>-<span class="title">python</span> 4.10.0.84 <span class="title">which</span> <span class="title">is</span> <span class="title">incompatible</span>.</span></span><br></pre></td></tr></table></figure>
+
+<p>看來是安裝太新的版本了，於是我執行 <code>pip install opencv-python&lt;=4.6.0.66</code>結果還是沒用。但是看起來還是不行，看起來是 numpy 太新，於是我嘗試：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install numpy&lt;<span class="number">2.0</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+<p>可以了，終於前進到下一個錯誤了</p>
+<h3 id="第六步"><a href="#第六步" class="headerlink" title="第六步"></a>第六步</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">Traceback (most recent <span class="keyword">call</span> last):</span><br><span class="line">  File &quot;F:\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PPOCRLabel\PPOCRLabel.py&quot;, line <span class="number">2840</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    sys.<span class="keyword">exit</span>(main())</span><br><span class="line">             ^^^^^^</span><br><span class="line">  File &quot;F:\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PPOCRLabel\PPOCRLabel.py&quot;, line <span class="number">2828</span>, <span class="keyword">in</span> main</span><br><span class="line">    app, _win = get_main_app(sys.argv)</span><br><span class="line">                ^^^^^^^^^^^^^^^^^^^^^^</span><br><span class="line">  File &quot;F:\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PPOCRLabel\PPOCRLabel.py&quot;, line <span class="number">2818</span>, <span class="keyword">in</span> get_main_app</span><br><span class="line">    win = MainWindow(lang=args.lang,</span><br><span class="line">          ^^^^^^^^^^^^^^^^^^^^^^^^^^</span><br><span class="line">  File &quot;F:\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PPOCRLabel\PPOCRLabel.py&quot;, line <span class="number">104</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    self.table_ocr = PPStructure(use_pdserving=False,</span><br><span class="line">                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span><br><span class="line">  File &quot;C:\tools\miniconda3\envs\lastTry\Lib\site-packages\paddleocr\paddleocr.py&quot;, line <span class="number">762</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    super().__init__(params)</span><br><span class="line">  File &quot;F:\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PPOCRLabel\..\ppstructure\predict_system.py&quot;, line <span class="number">82</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    self.return_word_box = args.return_word_box</span><br><span class="line">                           ^^^^^^^^^^^^^^^^^^^^</span><br><span class="line"><span class="function">AttributeError: &#x27;<span class="title">Namespace</span>&#x27; <span class="title">object</span> <span class="title">has</span> <span class="title">no</span> <span class="title">attribute</span> &#x27;<span class="title">return_word_box</span>&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>然後根據<a href="https://github.com/PaddlePaddle/PaddleOCR/issues/11166">這裡</a>的說明，是 paddleocr 版本太新的緣故，試著安裝 2.6.0 版本，解決了</p>
+<h3 id="第七步"><a href="#第七步" class="headerlink" title="第七步"></a>第七步</h3><p>你可能會遇到 <code>Microsoft Visual C++ 14.0 is required. Get it with “Microsoft Visual C   Build Tools</code>，你需要執行：<br><code>conda install libpython m2w64-toolchain -c msys2</code>。什麼去找 build-tools 的都沒用，<a href="https://blog.csdn.net/qzzzxiaosheng/article/details/125119006">我覺得裡面講的也很有道理，可以去看看</a>。</p>
+<h3 id="第八步"><a href="#第八步" class="headerlink" title="第八步"></a>第八步</h3><p>在此資料夾裡執行 <code>python PPOCRLabel.py </code>，遇到問題：</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">Traceback (most recent <span class="keyword">call</span> last):</span><br><span class="line">  File &quot;&lt;frozen runpy&gt;&quot;, line <span class="number">198</span>, <span class="keyword">in</span> _run_module_as_main</span><br><span class="line">  File &quot;&lt;frozen runpy&gt;&quot;, line <span class="number">88</span>, <span class="keyword">in</span> _run_code</span><br><span class="line">  File &quot;C:\tools\miniconda3\envs\lastTry\Scripts\PPOCRLabel.exe\__main__.py&quot;, line <span class="number">4</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  File &quot;C:\tools\miniconda3\envs\lastTry\Lib\site-packages\PPOCRLabel\PPOCRLabel.py&quot;, line <span class="number">40</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    from paddleocr import PaddleOCR, PPStructure</span><br><span class="line">  File &quot;F:\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PPOCRLabel\..\paddleocr.py&quot;, line <span class="number">575</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    class PaddleOCR(predict_system.TextSystem):</span><br><span class="line">                    ^^^^^^^^^^^^^^</span><br><span class="line"><span class="function">NameError: <span class="title">name</span> &#x27;<span class="title">predict_system</span>&#x27; <span class="title">is</span> <span class="title">not</span> <span class="title">defined</span></span></span><br></pre></td></tr></table></figure>
+
+<p>最後在<a href="https://github.com/PaddlePaddle/PaddleOCR/issues/12057">這裡</a>看到解法，其中底下說：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">从2.7.1开始paddleocr.py里面就缺了这句话from tools.infer import predict_system</span><br></pre></td></tr></table></figure>
+
+<p>加進去後，就好啦！</p>
+]]></content>
+      <tags>
+        <tag>ppocrlabel</tag>
+        <tag>paddlepaddle</tag>
+        <tag>tensorFlowLite</tag>
+      </tags>
   </entry>
 </search>
