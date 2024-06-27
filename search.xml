@@ -39,6 +39,12 @@
       </tags>
   </entry>
   <entry>
+    <title>首頁</title>
+    <url>/20240625/1243066710/</url>
+    <content><![CDATA[<p>要練習輸出想法</p>
+]]></content>
+  </entry>
+  <entry>
     <title>今日工作心得</title>
     <url>/20240626/1620941357/</url>
     <content><![CDATA[<p>我真的覺得濫用靜態變數真的會造成偵錯的災難……當然，我負責的 App 習慣只用一個 activity 就負責所有頁面的內容，但是因為不同人接手，再加上沒有交接習慣的緣故，因此容易有重工的情形。</p>
@@ -51,12 +57,6 @@
 </li>
 </ul>
 <p>我最近加入了程人頻道，發現裡面有前人整理的面試秘笈，希望我能有效吸收、找到更好的工作！</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>首頁</title>
-    <url>/20240625/1243066710/</url>
-    <content><![CDATA[<p>要練習輸出想法</p>
 ]]></content>
   </entry>
 </search>
