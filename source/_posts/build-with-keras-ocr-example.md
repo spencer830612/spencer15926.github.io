@@ -7,7 +7,6 @@ tags:
   - Android Studio Koala
   - gradle
 abbrlink: 3613599130
-date: 2024-06-28 09:52:53
 ---
 
 ## 前情提要
@@ -15,6 +14,8 @@ date: 2024-06-28 09:52:53
 在發現 ML KIT 可能沒辦法滿足我要對七段顯示器處理光學文字辨識後，我發現 TensorFlow 其實有給個範例，是關於 ocr 訓練出來的 tensorFlowLite 如何應用到手機上面。不過，當把專案匯入至我的 Android Studio 時，發現因為這個範例專案的 IDE 版本是 Android Studio 4.2，因此碰到許多問題。我會在下面 po 上我跟 ChatGpt 來回對話的記錄，並在這裡 po 上有更改的 code 以方便以後的我與過來人參考
 
 這是我與 ChatGPT 的[對話](<https://chatgpt.com/share/a5dc6ce6-ea42-462c-9894-69ed70242feb>)，可以去看看。
+
+<!-- more -->
 
 ---
 

@@ -9,7 +9,8 @@ date: 2024-06-26 17:42:08
 ---
 
 
-原本公司想要用影像去辨識七段顯示器，剛好網路上看到有可以用的[連結](<https://github.com/renjithsasidharan/seven-segment-ocr>)，於是開始了前途多舛的時間，然後還沒好 Orz.
+原本公司想要用影像去辨識七段顯示器，剛好網路上看到有可以用的[連結](<https://github.com/renjithsasidharan/seven-segment-ocr>)，於是開始了前途多舛的時間，結果終於好了。不過很多步驟我來不及記起來，但至少這些注意事項已經夠多了！
+<!-- more -->
 
 ## 開始
 
