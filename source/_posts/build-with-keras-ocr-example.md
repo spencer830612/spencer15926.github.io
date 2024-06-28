@@ -2,10 +2,12 @@
 title: 嘗試能讓官方的 keras_ocr 能在我的 Android Studio Koala 跑起來
 date: 2024-06-28 09:52:53
 tags:
-- Keras
-- Ocr
-- Android Studio Koala
-- gradle
+  - Keras
+  - Ocr
+  - Android Studio Koala
+  - gradle
+abbrlink: 3613599130
+date: 2024-06-28 09:52:53
 ---
 
 ## 前情提要
