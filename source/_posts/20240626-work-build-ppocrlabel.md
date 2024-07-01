@@ -62,6 +62,7 @@ paddleocr 2.7.3 requires opencv-python<=4.6.0.66, but you have opencv-python 4.1
 ```python
 pip install numpy<2.0.0
 ```
+
 可以了，終於前進到下一個錯誤了
 
 ### 第八步
@@ -97,7 +98,7 @@ AttributeError: 'Namespace' object has no attribute 'return_word_box'
 
 ### 第十步
 
-在此資料夾裡執行 `python PPOCRLabel.py `，遇到問題：
+在此資料夾裡執行 `python PPOCRLabel.py`，遇到問題：
 
 ```cmd
 Traceback (most recent call last):
