@@ -1,12 +1,13 @@
 ---
-title: thinkaboutimagere
-date: 2024-07-03 17:39:24
+title: 影像辨識技術之決策
 tags:
-- diary
-- image process
+  - diary
+  - image process
 categories:
-- diary
-- academic
+  - diary
+  - academic
+abbrlink: 3247877407
+date: 2024-07-03 17:39:24
 ---
 
 目前決定產線上的影像辨識可能會用 OCR 來實作。不過麻煩的就是：一開始的影像要怎麼清理？於是就有了這篇文章。
