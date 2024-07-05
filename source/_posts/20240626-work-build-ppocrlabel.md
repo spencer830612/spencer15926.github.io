@@ -4,6 +4,8 @@ tags:
   - ppocrlabel
   - paddlepaddle
   - tensorFlowLite
+categories:
+  - academic
 abbrlink: 1718242579
 date: 2024-06-26 17:42:08
 ---

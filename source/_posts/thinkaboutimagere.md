@@ -4,7 +4,6 @@ tags:
   - diary
   - image process
 categories:
-  - diary
   - academic
 abbrlink: 3247877407
 date: 2024-07-03 17:39:24

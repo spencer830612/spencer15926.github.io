@@ -5,7 +5,6 @@ tags:
   - NDK
   - MATLAB
 categories:
-  - diary
   - academic
 abbrlink: 2876724007
 date: 2024-07-04 16:54:07

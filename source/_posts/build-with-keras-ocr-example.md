@@ -6,6 +6,8 @@ tags:
   - Ocr
   - Android Studio Koala
   - gradle
+categories:
+  - academic
 abbrlink: 3613599130
 ---
 
