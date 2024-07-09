@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>想利用 ppocrlabel 做圖像訓練的前置步驟</title>
+    <url>/20240626/1718242579/</url>
+    <content><![CDATA[<p>原本公司想要用影像去辨識七段顯示器，剛好網路上看到有可以用的<a href="https://github.com/renjithsasidharan/seven-segment-ocr">連結</a>，於是開始了前途多舛的時間，結果終於好了。不過很多步驟我來不及記起來，但至少這些注意事項已經夠多了！<br><span id="more"></span></p>
+<h2 id="開始"><a href="#開始" class="headerlink" title="開始"></a>開始</h2><h3 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h3><p>首先你去用個 miniConda 用個獨立的環境，以免被相依性搞到掛掉。</p>
+<h3 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h3><p>執行 <code>python3 -m pip install paddlepaddle -i https://mirror.baidu.com/pypi/simple</code>，我就照著步驟安裝</p>
+<h3 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h3><p>執行 <code>pip install PPOCRLabel</code>，就可以先安裝需要的相依性套件。如果跳出錯誤，就照他的安裝，例如：</p>
+<ul>
+<li>可能會遇到 <code>gcc: error: /FIPython.h: File o directory non esistente</code> 的錯誤訊息，網路搜尋後可能是 <code>lmdb</code> 的問題，因此我執行：<br><code>conda install -c conda-forge python-lmdb</code></li>
+</ul>
+<h3 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h3><p>我反安裝：<code>pip uninstall PPOCRLabel</code>，因為我想要用 whl 安裝的方式。</p>
+<h3 id="第五步"><a href="#第五步" class="headerlink" title="第五步"></a>第五步</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ./PPOCRLabel </span><br><span class="line">反正就是這個資料夾</span><br><span class="line"></span><br><span class="line">python setup.py bdist_wheel</span><br><span class="line">pip install dist/看這個資料夾裡出現的那個檔名</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="第六步"><a href="#第六步" class="headerlink" title="第六步"></a>第六步</h3><p>中間跳出缺少什麼相依，就安裝</p>
+<h3 id="第七步"><a href="#第七步" class="headerlink" title="第七步"></a>第七步</h3><p>這時一直跳出 <code>ImportError: numpy.core.multiarray failed to import</code>，但是我重新安裝 numpy 也沒用，這時我只好重新安裝 opencv-python，但是在安裝時看到下面的訊息：</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="function">ERROR: <span class="title">pip</span>&#x27;<span class="title">s</span> <span class="title">dependency</span> <span class="title">resolver</span> <span class="title">does</span> <span class="title">not</span> <span class="title">currently</span> <span class="title">take</span> <span class="title">into</span> <span class="title">account</span> <span class="title">all</span> <span class="title">the</span> <span class="title">packages</span> <span class="title">that</span> <span class="title">are</span> <span class="title">installed</span>. <span class="title">This</span> <span class="title">behaviour</span> <span class="title">is</span> <span class="title">the</span> <span class="title">source</span> <span class="title">of</span> <span class="title">the</span> <span class="title">following</span> <span class="title">dependency</span> <span class="title">conflicts</span>.</span></span><br><span class="line"><span class="function"><span class="title">paddleocr</span> 2.7.3 <span class="title">requires</span> <span class="title">opencv</span>-<span class="title">python</span>&lt;=4.6.0.66, <span class="title">but</span> <span class="title">you</span> <span class="title">have</span> <span class="title">opencv</span>-<span class="title">python</span> 4.10.0.84 <span class="title">which</span> <span class="title">is</span> <span class="title">incompatible</span>.</span></span><br></pre></td></tr></table></figure>
+<p>看來是安裝太新的版本了，於是我執行 <code>pip install opencv-python&lt;=4.6.0.66</code>結果還是沒用。但是看起來還是不行，看起來是 numpy 太新，於是我嘗試：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install numpy&lt;<span class="number">2.0</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+<p>可以了，終於前進到下一個錯誤了</p>
+<h3 id="第八步"><a href="#第八步" class="headerlink" title="第八步"></a>第八步</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">Traceback (most recent <span class="keyword">call</span> last):</span><br><span class="line">  File &quot;F:\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PPOCRLabel\PPOCRLabel.py&quot;, line <span class="number">2840</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    sys.<span class="keyword">exit</span>(main())</span><br><span class="line">             ^^^^^^</span><br><span class="line">  File &quot;F:\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PPOCRLabel\PPOCRLabel.py&quot;, line <span class="number">2828</span>, <span class="keyword">in</span> main</span><br><span class="line">    app, _win = get_main_app(sys.argv)</span><br><span class="line">                ^^^^^^^^^^^^^^^^^^^^^^</span><br><span class="line">  File &quot;F:\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PPOCRLabel\PPOCRLabel.py&quot;, line <span class="number">2818</span>, <span class="keyword">in</span> get_main_app</span><br><span class="line">    win = MainWindow(lang=args.lang,</span><br><span class="line">          ^^^^^^^^^^^^^^^^^^^^^^^^^^</span><br><span class="line">  File &quot;F:\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PPOCRLabel\PPOCRLabel.py&quot;, line <span class="number">104</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    self.table_ocr = PPStructure(use_pdserving=False,</span><br><span class="line">                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span><br><span class="line">  File &quot;C:\tools\miniconda3\envs\lastTry\Lib\site-packages\paddleocr\paddleocr.py&quot;, line <span class="number">762</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    super().__init__(params)</span><br><span class="line">  File &quot;F:\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PPOCRLabel\..\ppstructure\predict_system.py&quot;, line <span class="number">82</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    self.return_word_box = args.return_word_box</span><br><span class="line">                           ^^^^^^^^^^^^^^^^^^^^</span><br><span class="line"><span class="function">AttributeError: &#x27;<span class="title">Namespace</span>&#x27; <span class="title">object</span> <span class="title">has</span> <span class="title">no</span> <span class="title">attribute</span> &#x27;<span class="title">return_word_box</span>&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>然後根據<a href="https://github.com/PaddlePaddle/PaddleOCR/issues/11166">這裡</a>的說明，是 paddleocr 版本太新的緣故，試著安裝 2.6.0 版本，解決了</p>
+<h3 id="第九步"><a href="#第九步" class="headerlink" title="第九步"></a>第九步</h3><p>你可能會遇到 <code>Microsoft Visual C++ 14.0 is required. Get it with “Microsoft Visual C   Build Tools</code>，你需要執行：<br><code>conda install libpython m2w64-toolchain -c msys2</code>。什麼去找 build-tools 的都沒用，<a href="https://blog.csdn.net/qzzzxiaosheng/article/details/125119006">我覺得裡面講的也很有道理，可以去看看</a>。</p>
+<h3 id="第十步"><a href="#第十步" class="headerlink" title="第十步"></a>第十步</h3><p>在此資料夾裡執行 <code>python PPOCRLabel.py</code>，遇到問題：</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">Traceback (most recent <span class="keyword">call</span> last):</span><br><span class="line">  File &quot;&lt;frozen runpy&gt;&quot;, line <span class="number">198</span>, <span class="keyword">in</span> _run_module_as_main</span><br><span class="line">  File &quot;&lt;frozen runpy&gt;&quot;, line <span class="number">88</span>, <span class="keyword">in</span> _run_code</span><br><span class="line">  File &quot;C:\tools\miniconda3\envs\lastTry\Scripts\PPOCRLabel.exe\__main__.py&quot;, line <span class="number">4</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  File &quot;C:\tools\miniconda3\envs\lastTry\Lib\site-packages\PPOCRLabel\PPOCRLabel.py&quot;, line <span class="number">40</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    from paddleocr import PaddleOCR, PPStructure</span><br><span class="line">  File &quot;F:\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PaddleOCR-release-<span class="number">2</span>.<span class="number">7</span>.<span class="number">1</span>\PPOCRLabel\..\paddleocr.py&quot;, line <span class="number">575</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    class PaddleOCR(predict_system.TextSystem):</span><br><span class="line">                    ^^^^^^^^^^^^^^</span><br><span class="line"><span class="function">NameError: <span class="title">name</span> &#x27;<span class="title">predict_system</span>&#x27; <span class="title">is</span> <span class="title">not</span> <span class="title">defined</span></span></span><br></pre></td></tr></table></figure>
+<p>最後在<a href="https://github.com/PaddlePaddle/PaddleOCR/issues/12057">這裡</a>看到解法，其中底下說：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">从2.7.1开始paddleocr.py里面就缺了这句话from tools.infer import predict_system</span><br></pre></td></tr></table></figure>
+<p>加進去後，就好啦！</p>
+]]></content>
+      <categories>
+        <category>academic</category>
+      </categories>
+      <tags>
+        <tag>ppocrlabel</tag>
+        <tag>paddlepaddle</tag>
+        <tag>tensorFlowLite</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>今日工作心得</title>
+    <url>/20240626/1620941357/</url>
+    <content><![CDATA[<p>我真的覺得濫用靜態變數真的會造成偵錯的災難……當然，我負責的 App 習慣只用一個 activity 就負責所有頁面的內容，但是因為不同人接手，再加上沒有交接習慣的緣故，因此容易有重工的情形。</p>
+<p>全部是靜態變數（static variable），因此我非常難知道這個變數是為何而變，我必須要在可能的入口全部埋一次偵錯日誌，再透過二分法慢慢篩出真正的入口。</p>
+<p>我希望自己做程式時可以辦到：</p>
+<ul>
+<li><p>不濫用靜態變數：靜態變數只用在常數。在設計時，就要先考慮好這些需要傳遞變數的情形，不要用靜態變數迴避此問題。</p>
+</li>
+<li><p>不要為了省變數個數而重複使用：原先的 App 會為了達到此目的，把不同意義的內容用同個變數去承載；再加上靜態變數的濫用問題，導致寫程式與維護上更令人崩潰。</p>
+</li>
+</ul>
+<p>我最近加入了程人頻道，發現裡面有前人整理的面試秘笈，希望我能有效吸收、找到更好的工作！</p>
+]]></content>
+      <categories>
+        <category>diary</category>
+      </categories>
+      <tags>
+        <tag>diary</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>評估影像辨識的流程</title>
+    <url>/20240702/3182283678/</url>
+    <content><![CDATA[<p>產線上似乎想要有可以方便挑出 LCD 上面的錯誤數字或代碼，希望可以用影像可以「快速」的抓出來。所以我就搜尋了下午並且看看網路上實作的教學。<br><span id="more"></span></p>
+<h2 id="目前可以使用的資料訓練方式，並且已有現成可以在-Android-上執行的程式碼："><a href="#目前可以使用的資料訓練方式，並且已有現成可以在-Android-上執行的程式碼：" class="headerlink" title="目前可以使用的資料訓練方式，並且已有現成可以在 Android 上執行的程式碼："></a>目前可以使用的資料訓練方式，並且已有現成可以在 Android 上執行的程式碼：</h2><ol>
+<li>Tesseract：傳統 OCR 辨識</li>
+<li>Keras_OCR：機器學習 OCR</li>
+</ol>
+<h2 id="為何往這兩個方向發展"><a href="#為何往這兩個方向發展" class="headerlink" title="為何往這兩個方向發展"></a>為何往這兩個方向發展</h2><ul>
+<li>Tesseract 與 TensorFlow 皆為 Google 維護，且有許多文件可以參考</li>
+<li>有不少參考文件</li>
+<li>有 android 能使用的配套措施<ul>
+<li>Tesseract 有現成的套用 APP，Keras_OCR 訓練出來的模型還需要轉換成手機能用的</li>
+<li>Tesseract 可以在已有的模型上加資料再訓練</li>
+</ul>
+</li>
+</ul>
+<h2 id="目前待解決的問題"><a href="#目前待解決的問題" class="headerlink" title="目前待解決的問題"></a>目前待解決的問題</h2><h3 id="個別的問題"><a href="#個別的問題" class="headerlink" title="個別的問題"></a>個別的問題</h3><ol>
+<li>Keras_OCR<ul>
+<li>TensorFlow 是現在流行的機器學習框架，但是很少提供七段顯示器的辨識核心</li>
+<li>機器學習的針對性超級強，並且屬於黑箱模式，很難思考為什麼我們的場景會無法使用<ul>
+<li>模型訓練之初就必須儘量蒐集我們實際使用的情景</li>
+<li>如果需要再辨識出新列入的文字，必須要重頭訓練</li>
+<li>要實際訓練一次，才能知道模型的準確損失率如何、我們的資料量是否有好好訓練模型</li>
+<li>要訓練「文字在哪裡的模型」與「這是什麼文字的模型」</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Tesseract<ul>
+<li>Tesseract 擅長辨識數位文檔，影像必須先處理成 Tesseract 容易辨識的顏色分布（黑白化、清除非文字的雜訊、加強文字輪廓），這方面在 Android 上比較難做</li>
+</ul>
+</li>
+</ol>
+<h3 id="共同的問題"><a href="#共同的問題" class="headerlink" title="共同的問題"></a>共同的問題</h3><ol>
+<li>目前兩方現存的模型在我們 LCD 螢幕上的辨識率非常不好</li>
+<li>訓練資料集很大：以網路上的案例，Tesseract 在現有的訓練集再加上修正集，作者也追加了 500 張圖片與 5000 個字元對應；而 Keras_OCR 只訓練一輪的模型通常無法使用，但是要訓練多寡也是靠事後的準確損失率來做判斷</li>
+</ol>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>目前可以看到：如果需要能在工作上有幫助的，通常會需要有大量的資料訓練，也不是說一兩百張照片就能解決的。因此如果要發展，可能僅憑我會需要耗費非常多的時間。</p>
+]]></content>
+      <categories>
+        <category>academic</category>
+      </categories>
+      <tags>
+        <tag>diary</tag>
+        <tag>image recognize</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>嘗試能讓官方的 keras_ocr 能在我的 Android Studio Koala 跑起來</title>
+    <url>/20240628/3613599130/</url>
+    <content><![CDATA[<h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>在發現 ML KIT 可能沒辦法滿足我要對七段顯示器處理光學文字辨識後，我發現 TensorFlow 其實有給個範例，是關於 ocr 訓練出來的 tensorFlowLite 如何應用到手機上面。不過，當把專案匯入至我的 Android Studio 時，發現因為這個範例專案的 IDE 版本是 Android Studio 4.2，因此碰到許多問題。我會在下面 po 上我跟 ChatGpt 來回對話的記錄，並在這裡 po 上有更改的 code 以方便以後的我與過來人參考</p>
+<p>這是我與 ChatGPT 的<a href="https://chatgpt.com/share/a5dc6ce6-ea42-462c-9894-69ed70242feb">對話</a>，可以去看看。</p>
+<span id="more"></span>
+<hr>
+<h3 id="更改檔案-1：app-build-gradle"><a href="#更改檔案-1：app-build-gradle" class="headerlink" title="更改檔案 1：app:build.gradle"></a>更改檔案 1：app:build.gradle</h3><p>主要的變更有</p>
+<ul>
+<li>添加 namespace</li>
+<li>手動設置 java 版本：因為我的 IDE 版本設置是 17，因此我就改成 17。</li>
+<li>加上 viewBinding true：其實我覺得應該是不用，因為專案內的是用最基本的方式指派物件。</li>
+</ul>
+<p><a href="https://www.diffchecker.com/dotkOibz/">內文比較的詳細連結</a></p>
+<hr>
+<h3 id="更改檔案-2：gradle-properties"><a href="#更改檔案-2：gradle-properties" class="headerlink" title="更改檔案 2：gradle.properties"></a>更改檔案 2：gradle.properties</h3><p>主要的變更是指定 java jdk 的位置。雖然 IDE 有指定，但我不知道為什麼這裡要再指定一次，編譯才會過。</p>
+<p><a href="https://www.diffchecker.com/LkYRSIbs/">內文比較的詳細連結</a></p>
+<hr>
+<h3 id="更改檔案-3：project-build-gradle"><a href="#更改檔案-3：project-build-gradle" class="headerlink" title="更改檔案 3：project: build.gradle"></a>更改檔案 3：project: build.gradle</h3><p>主要的變更有</p>
+<ul>
+<li>變更 gradle 版本號：不同的 Android Studio 有不同的 gradle 版本指定，因此要改</li>
+<li>變更 gradle-download-task：我就順勢升級了</li>
+</ul>
+<p><a href="https://www.diffchecker.com/LVuvM6FT/">內文比較的詳細連結</a></p>
+<hr>
+<h3 id="更改檔案-4：gradle-wrapper-properties"><a href="#更改檔案-4：gradle-wrapper-properties" class="headerlink" title="更改檔案 4：gradle-wrapper.properties"></a>更改檔案 4：gradle-wrapper.properties</h3><p>主要的變更是修改 gradle 的版號。</p>
+<p><a href="https://www.diffchecker.com/icExyeaN/">內文比較的詳細連結</a></p>
+<p>大坑大雷，但最後我去更新所有 dependencies 的版本號，也沒有問題了！</p>
+]]></content>
+      <categories>
+        <category>academic</category>
+      </categories>
+      <tags>
+        <tag>Keras</tag>
+        <tag>Ocr</tag>
+        <tag>Android Studio Koala</tag>
+        <tag>gradle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>影像辨識技術之決策</title>
+    <url>/20240703/3247877407/</url>
+    <content><![CDATA[<p>目前決定產線上的影像辨識可能會用 OCR 來實作。不過麻煩的就是：一開始的影像要怎麼清理？於是就有了這篇文章。</p>
+<span id="more"></span>
+<h1 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h1><p>我一直在猶豫應該是要用 OCR 還是用機器學習的方式去處理光學辨識。後來我在網路上看到了某位老師寫的<a href="https://blog.udn.com/yccsonar/180275067">文章</a>，後來仔細想想，就覺得可能還是用 OCR。</p>
+<h1 id="思考的點"><a href="#思考的點" class="headerlink" title="思考的點"></a>思考的點</h1><p>我從這個部落格看了些文章後，我整理一下我的辨識環境：</p>
+<ul>
+<li>固定的 LCD 螢幕</li>
+<li>辨識的環境是我們可以指定的<ul>
+<li>請他們擺正</li>
+<li>請他們打光</li>
+</ul>
+</li>
+<li>OCR 的技術已發展許久<ul>
+<li>影像的事前處理</li>
+</ul>
+</li>
+<li>Tessart 已經有類似的技術，或許可以用這些圖片去訓練</li>
+</ul>
+<p>而且機器學習本身需要非常大量的圖片訓練，但我記得光學 OCR 的訓練過程並非相同，所以我覺得這是有機會的！</p>
+<h1 id="需要做的事情"><a href="#需要做的事情" class="headerlink" title="需要做的事情"></a>需要做的事情</h1><p>如果要實行，那麼影像處理的數學就需要複習了！還好，我研究所有上過影像辨識的課程，上網看數學與程式碼的內容其實都很好理解。</p>
+<p>例如<a href="https://medium.com/@mingjiehsu/%E4%BA%8C%E5%80%BC%E5%8C%96%E9%96%A5%E5%80%BC%E8%87%AA%E5%8B%95%E5%8C%96%E7%AF%A9%E9%81%B8-otsu-%E5%A4%9A%E9%87%8D%E9%96%80%E6%AA%BB%E5%80%BC-%E7%9B%B4%E6%96%B9%E5%9C%96-345aff032e0f">[圖像處理] 二值化閥值自動化篩選 - Otsu, 多重門檻值, 直方圖</a>就介紹了更進階的二值化方式，就可以有更好的方式可以去把圖片切成 2，甚至是 3 個部分，再依據自己的需求去選取需要的遮照範圍。</p>
+]]></content>
+      <categories>
+        <category>academic</category>
+      </categories>
+      <tags>
+        <tag>diary</tag>
+        <tag>image process</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>研究如何在 Android 跑 Python</title>
+    <url>/20240705/2386244310/</url>
+    <content><![CDATA[<p>想在 Android 上面跑 Python 是滿奇特的，但是研究研究也無妨！</p>
+<span id="more"></span>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我為了要實行影像辨識的方法，因此在網路上找了許多條路。不過影像辨識常常用 Python，很多教學也是使用 Python，我就想說：我可不可以在 Android 上面執行 Python 呢？因此我就尋找相關的套件，以及一些 Python 執行的注意事項。</p>
+<h2 id="相關套件-Chaquopy"><a href="#相關套件-Chaquopy" class="headerlink" title="相關套件 - Chaquopy"></a>相關套件 - Chaquopy</h2><p>目前看到我比較滿意的是 Chaquopy，我覺得有幾點是滿不錯的;</p>
+<ol>
+<li><p>支援知名套件：目前看到他的<a href="https://chaquo.com/pypi-13.1/">支援列表</a>，知名的 numpy、tensorFlow、matplotlib 等等的都有，也說支援超過 90% 以上 PyPl 所列出的套件。</p>
+</li>
+<li><p>方便整合進去 AndroidL：一開始看到網路上的<a href="https://medium.com/@k1992313/python-for-android-%E8%B8%A9%E9%9B%B7%E5%BF%83%E5%BE%97-f07ac9c106ac">採雷心得</a>，發現要整合是語言是很困難的事情。剛好 Chaquopy 幫我們解決這一哩路，當然就使用 Chaquopy 了。</p>
+</li>
+</ol>
+<h2 id="開始安裝"><a href="#開始安裝" class="headerlink" title="開始安裝"></a>開始安裝</h2><p>參考資料：</p>
+<ul>
+<li>官方網站：<a href="https://chaquo.com/chaquopy/doc/current/android.html">https://chaquo.com/chaquopy/doc/current/android.html</a></li>
+<li>其餘資料：<a href="https://hackmd.io/@kennethHung/S1mMZThps">https://hackmd.io/@kennethHung/S1mMZThps</a></li>
+</ul>
+<h3 id="設定-Project-層級的-build-gradle"><a href="#設定-Project-層級的-build-gradle" class="headerlink" title="設定 Project 層級的 build.gradle"></a>設定 Project 層級的 build.gradle</h3><p>新增設定：</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id(<span class="string">&quot;com.chaquo.python&quot;</span>) version <span class="string">&quot;15.0.1&quot;</span> apply <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="設定-Module-層級的-build-gradle"><a href="#設定-Module-層級的-build-gradle" class="headerlink" title="設定 Module 層級的 build.gradle"></a>設定 Module 層級的 build.gradle</h3><p>要在 plugins 地方新增：</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id (<span class="string">&quot;com.chaquo.python&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然後你直接編譯後會看到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">A problem occurred configuring project &#x27;:app&#x27;.</span><br><span class="line">&gt; Variant &#x27;debug&#x27;: Chaquopy requires ndk.abiFilters: you may want to add it to android.defaultConfig.</span><br></pre></td></tr></table></figure>
+<p>因此我們還要在 android -&gt; defaultConfig 裡新增 ndk 選項：</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    ......</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        ......</span><br><span class="line">        ndk &#123;</span><br><span class="line">            abiFilters <span class="string">&quot;arm64-v8a&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>如果有在開發 Android APP，那麼會知道手機 CPU 的支援有分四種：</p>
+<ul>
+<li>armeabi-v7a, 32-bit arch，幾乎涵蓋所有android 裝置。</li>
+<li>arm64-v8a, 64-bit arch，涵蓋2018 後的大部分裝置。</li>
+<li>x86, Android 模擬器使用。</li>
+<li>x86_64, Android 模擬器使用。</li>
+</ul>
+<p>要注意：支援的越多，Chaquopy 就會複製相對應的分數，會讓 APK 容量變大。</p>
+<p><img src="https://i.imgur.com/iIjaFWs.png" alt="Image"><br>可以看到：x86_64 主要是給虛擬器用的。</p>
+<h4 id="安裝-Package"><a href="#安裝-Package" class="headerlink" title="安裝 Package"></a>安裝 Package</h4><p>接著依據你需要的 package 安裝。除了連上 Chaquopy 的庫，也可以用 whl、requirement 安裝。</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">chaquopy &#123;</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        pip &#123;</span><br><span class="line">            <span class="comment">// A requirement specifier, with or without a version number:</span></span><br><span class="line">            install(<span class="string">&quot;scipy&quot;</span>)</span><br><span class="line">            install(<span class="string">&quot;requests==2.24.0&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// An sdist or wheel filename, relative to the project directory:</span></span><br><span class="line">            install(<span class="string">&quot;MyPackage-1.2.3-py2.py3-none-any.whl&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// A directory containing a setup.py, relative to the project</span></span><br><span class="line">            <span class="comment">// directory (must contain at least one slash):</span></span><br><span class="line">            install(<span class="string">&quot;./MyPackage&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// &quot;-r&quot;` followed by a requirements filename, relative to the</span></span><br><span class="line">            <span class="comment">// project directory:</span></span><br><span class="line">            install(<span class="string">&quot;-r&quot;</span>, <span class="string">&quot;requirements.txt&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>例如我就這麼設定：</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">python &#123;</span><br><span class="line">    pip &#123;</span><br><span class="line">        install <span class="string">&quot;scipy&quot;</span></span><br><span class="line">        install <span class="string">&quot;numpy&quot;</span></span><br><span class="line">        install <span class="string">&quot;opencv-python&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="放入-Python-code"><a href="#放入-Python-code" class="headerlink" title="放入 Python code"></a>放入 Python code</h2><p>Python code 放置在 <code>app\src\main\python</code>，於是我就用這段 code 做範例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">numpy_example</span>():</span><br><span class="line">    a = np.random.rand(<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line">    mean = np.mean(a)</span><br><span class="line">    std = np.std(a)</span><br><span class="line">    <span class="keyword">return</span> mean, std</span><br></pre></td></tr></table></figure>
+<p>基本上返回的是 $2\times 1$ 的陣列，裡面的元素都是 <code>float</code> 型態。 接著我在 <code>MainActivity.kt</code> 這麼做：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(!Python.isStarted()) &#123;</span><br><span class="line">    Python.start(AndroidPlatform(<span class="keyword">this</span>))</span><br><span class="line">    <span class="comment">// 一開始一定要初始化</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> python = Python.getInstance()</span><br><span class="line"><span class="keyword">val</span> pyProject = python.getModule(<span class="string">&quot;test&quot;</span>) <span class="comment">// code 的檔案名字</span></span><br><span class="line"><span class="keyword">val</span> pyObj = pyProject[<span class="string">&quot;numpy_example&quot;</span>] <span class="comment">// code 的 function 名字</span></span><br><span class="line"><span class="keyword">val</span> result = pyObj!!.call()</span><br><span class="line"><span class="keyword">val</span> mean: <span class="built_in">Float</span> = result.asList()[<span class="number">0</span>].toFloat()</span><br><span class="line"><span class="keyword">val</span> std: <span class="built_in">Float</span> = result.asList()[<span class="number">1</span>].toFloat()</span><br><span class="line">Log.d(<span class="string">&quot;Example&quot;</span>, <span class="string">&quot;mean: <span class="variable">$mean</span>&quot;</span>)</span><br><span class="line">Log.d(<span class="string">&quot;Example&quot;</span>, <span class="string">&quot;std: <span class="variable">$std</span>&quot;</span>)</span><br><span class="line"><span class="keyword">val</span> time2 = Instant.now().toEpochMilli()</span><br><span class="line">Log.d(<span class="string">&quot;Example&quot;</span>, <span class="string">&quot;Go: <span class="variable">$time2</span>&quot;</span>)</span><br><span class="line">Log.d(<span class="string">&quot;Example&quot;</span>, <span class="string">&quot;Pass: <span class="subst">$&#123;time2 - time&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>看到結果了！</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Now: 1720161362600</span><br><span class="line">mean: 0.5501784</span><br><span class="line">std: 0.27493423</span><br><span class="line">Go: 1720161363050</span><br><span class="line">Pass: 450</span><br></pre></td></tr></table></figure>
+<p>不過我發現：當輸出的情況變複雜時，在 Kotlin 這裡的處理會愈複雜。如果我把 Python 那邊改成這樣：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">numpy_example</span>():</span><br><span class="line">    a = np.random.rand(<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line">    mean = np.mean(a)</span><br><span class="line">    <span class="keyword">return</span> mean, a</span><br></pre></td></tr></table></figure>
+<p>這時 Kotlin 這邊就要這樣處理</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> mean: <span class="built_in">Float</span> = result.asList()[<span class="number">0</span>].toFloat()</span><br><span class="line"><span class="keyword">val</span> a: Array&lt;FloatArray&gt; = result.asList()[<span class="number">1</span>].asList()</span><br><span class="line">    .map &#123; array -&gt; array.asList()</span><br><span class="line">        .map &#123; it.toFloat() &#125;.toFloatArray()</span><br><span class="line">    &#125;.toTypedArray()</span><br></pre></td></tr></table></figure>
+<p>好耶已經有點瘋狂了，如果你輸出的會是 Tensor 型式，那麼 map 的地方應該會變的非常醜。而其他輸出的型式，就需要再花時間研究：水來土掩、兵來將擋。</p>
+<p>Update: 其實：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> a: Array&lt;FloatArray&gt; = result.asList()[<span class="number">1</span>].toJava(Array&lt;FloatArray&gt;::<span class="keyword">class</span>.java)</span><br></pre></td></tr></table></figure>
+<p>這樣就好，我想得太複雜了。</p>
+<h2 id="檔案大小"><a href="#檔案大小" class="headerlink" title="檔案大小"></a>檔案大小</h2><p><img src="https://i.imgur.com/CSkaXtd.png" alt="Image"></p>
+<p>上面是沒有 Pytohn 的純粹 APK，下面是包了 Python 的 APK，各位可以看到：光是引入 numpy，就多了近 45 MB，所以如果你不節制的控制 Package 的數量，那麼你整個 APK 就會非常肥大。</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>使用 Python 非常方便，隨之而來的代價是 APK 的大小，以及執行速度被拖慢。我是覺得如果有能在 Android 完成的就先使用，如果是 Python 裡面好用的套件，建議先處理完後再傳入。那這樣子，我不如直接在 Android 上面使用 OpenCV 應該更好吧？</p>
+<p>謝謝大家。</p>
+]]></content>
+      <categories>
+        <category>academic</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Android</tag>
+        <tag>Chaquopy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>有可能利用 MATLAB 生成 C++ 程式碼給 Android 用嗎？</title>
+    <url>/20240704/2876724007/</url>
+    <content><![CDATA[<p>關於對 MATLAB 不太熟，以及對 MATLAB 這條路感到幻滅的嘗試過程。</p>
+<span id="more"></span>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面有在研究 Python 做影像前置處理的部分。但我突然想到：MATLAB 似乎有把程式碼轉成 C++ 的功能，那我是否可以先用 MATLAB 的 ImageProcess Tool 先自己進行一遍提取所需區域的內容，再把他生成的程式碼轉換成 C++ 丟到 Android 上執行，可以這樣嗎？</p>
+<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><p>因為 Android Studio 其實有開發 NDK 的功能，也就是可以在上面執行 C 或 C++ 語言的功能，因此我才會考慮用這種方式轉換 MATLAB 的程式碼。一方面是 Android 上不太可能能跑 Matlab 的程式碼，另一方面是我認為 C++ 語言執行的效率夠快，或許更適合處理影像的場景</p>
+<h2 id="嘗試過程"><a href="#嘗試過程" class="headerlink" title="嘗試過程"></a>嘗試過程</h2><p>其實也蠻順利的，因為你在學生時代申請的學術帳號還可以繼續用，我就可以再下載到公司的電腦用，等到不用時再記得移除即可。</p>
+<p>不過在嘗試輸出時就發現問題了！</p>
+<h3 id="什麼是-Entry-Point-Functions？"><a href="#什麼是-Entry-Point-Functions？" class="headerlink" title="什麼是 Entry-Point Functions？"></a>什麼是 Entry-Point Functions？</h3><p>首先我上次寫 C 語言已經是八年前的事情，我剩下的印象就是「恐怖」、「指標很可怕」。不過 MATLAB 的好處，就是有提供詳細的說明，大家可以去看看。</p>
+<p>連結：<a href="https://www.mathworks.com/help/rtw/ug/configure-c-code-generation-for-model-entry-point-functions.html">https://www.mathworks.com/help/rtw/ug/configure-c-code-generation-for-model-entry-point-functions.html</a></p>
+<h3 id="決定輸入參數的資料型態"><a href="#決定輸入參數的資料型態" class="headerlink" title="決定輸入參數的資料型態"></a>決定輸入參數的資料型態</h3><p>在 MATLAB 裡，這個函式吃進去的參數是 RGB 色版的陣列，所以應該是類似於 3 維陣列的 tensor 形式。但是呢……</p>
+<p><img src="https://i.imgur.com/YiZEdYw.png" alt="Image"><br><img src="https://i.imgur.com/QlVini6.png" alt="Image"></p>
+<p>他只有 Matrix 形式耶……那我就會被卡在這裡了。好就算我這裡先用成 2 維型式，但接下來還是有別的事情。</p>
+<h3 id="選擇編譯的-compiler"><a href="#選擇編譯的-compiler" class="headerlink" title="選擇編譯的 compiler"></a>選擇編譯的 compiler</h3><p>首先會要你選擇你是要在哪類裝置上進行</p>
+<p><img src="https://i.imgur.com/fjfQEWI.png" alt="Image"></p>
+<p>如果選擇 None 的話，接下來會繼續選裝置內容</p>
+<p><img src="https://i.imgur.com/Qdu45Qe.png" alt="Image"></p>
+<p>以及選擇你要的 Compiler，這可能問題相對沒那麼大。</p>
+<p><img src="https://i.imgur.com/XvjXhhu.png" alt="Image"></p>
+<p>這邊我根本不知道怎麼選，於是最後編譯時就過不去了。</p>
+<h3 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h3><p>這邊非常吃你對於硬體的理解。那我覺得麻煩的是：如果是跟硬體有關係，那麼我想放到手機上，手機我記得是 arm 吧？可是會不會不同手機會有不同的差異呢？會不會中國那邊習慣用的手機又是不一樣的？然後 ImageProcess Tool 又是 MATLAB 獨有的工具，如果程式碼裡有用到他的函式，那有可能會全部輸出讓我們用嗎？可惜後者無法驗證，因為光是前者就過不去了，唉唉。</p>
+]]></content>
+      <categories>
+        <category>academic</category>
+      </categories>
+      <tags>
+        <tag>image process</tag>
+        <tag>NDK</tag>
+        <tag>MATLAB</tag>
+      </tags>
+  </entry>
+</search>
