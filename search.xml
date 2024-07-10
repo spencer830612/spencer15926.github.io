@@ -106,6 +106,73 @@
       </tags>
   </entry>
   <entry>
+    <title>研究如何在 Android 跑 Python</title>
+    <url>/20240705/2386244310/</url>
+    <content><![CDATA[<p>想在 Android 上面跑 Python 是滿奇特的，但是研究研究也無妨！</p>
+<span id="more"></span>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我為了要實行影像辨識的方法，因此在網路上找了許多條路。不過影像辨識常常用 Python，很多教學也是使用 Python，我就想說：我可不可以在 Android 上面執行 Python 呢？因此我就尋找相關的套件，以及一些 Python 執行的注意事項。</p>
+<h2 id="相關套件-Chaquopy"><a href="#相關套件-Chaquopy" class="headerlink" title="相關套件 - Chaquopy"></a>相關套件 - Chaquopy</h2><p>目前看到我比較滿意的是 Chaquopy，我覺得有幾點是滿不錯的;</p>
+<ol>
+<li><p>支援知名套件：目前看到他的<a href="https://chaquo.com/pypi-13.1/">支援列表</a>，知名的 numpy、tensorFlow、matplotlib 等等的都有，也說支援超過 90% 以上 PyPl 所列出的套件。</p>
+</li>
+<li><p>方便整合進去 AndroidL：一開始看到網路上的<a href="https://medium.com/@k1992313/python-for-android-%E8%B8%A9%E9%9B%B7%E5%BF%83%E5%BE%97-f07ac9c106ac">採雷心得</a>，發現要整合是語言是很困難的事情。剛好 Chaquopy 幫我們解決這一哩路，當然就使用 Chaquopy 了。</p>
+</li>
+</ol>
+<h2 id="開始安裝"><a href="#開始安裝" class="headerlink" title="開始安裝"></a>開始安裝</h2><p>參考資料：</p>
+<ul>
+<li>官方網站：<a href="https://chaquo.com/chaquopy/doc/current/android.html">https://chaquo.com/chaquopy/doc/current/android.html</a></li>
+<li>其餘資料：<a href="https://hackmd.io/@kennethHung/S1mMZThps">https://hackmd.io/@kennethHung/S1mMZThps</a></li>
+</ul>
+<h3 id="設定-Project-層級的-build-gradle"><a href="#設定-Project-層級的-build-gradle" class="headerlink" title="設定 Project 層級的 build.gradle"></a>設定 Project 層級的 build.gradle</h3><p>新增設定：</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id(<span class="string">&quot;com.chaquo.python&quot;</span>) version <span class="string">&quot;15.0.1&quot;</span> apply <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="設定-Module-層級的-build-gradle"><a href="#設定-Module-層級的-build-gradle" class="headerlink" title="設定 Module 層級的 build.gradle"></a>設定 Module 層級的 build.gradle</h3><p>要在 plugins 地方新增：</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id (<span class="string">&quot;com.chaquo.python&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然後你直接編譯後會看到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">A problem occurred configuring project &#x27;:app&#x27;.</span><br><span class="line">&gt; Variant &#x27;debug&#x27;: Chaquopy requires ndk.abiFilters: you may want to add it to android.defaultConfig.</span><br></pre></td></tr></table></figure>
+<p>因此我們還要在 android -&gt; defaultConfig 裡新增 ndk 選項：</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    ......</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        ......</span><br><span class="line">        ndk &#123;</span><br><span class="line">            abiFilters <span class="string">&quot;arm64-v8a&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>如果有在開發 Android APP，那麼會知道手機 CPU 的支援有分四種：</p>
+<ul>
+<li>armeabi-v7a, 32-bit arch，幾乎涵蓋所有android 裝置。</li>
+<li>arm64-v8a, 64-bit arch，涵蓋2018 後的大部分裝置。</li>
+<li>x86, Android 模擬器使用。</li>
+<li>x86_64, Android 模擬器使用。</li>
+</ul>
+<p>要注意：支援的越多，Chaquopy 就會複製相對應的分數，會讓 APK 容量變大。</p>
+<p><img src="https://i.imgur.com/iIjaFWs.png" alt="Image"><br>可以看到：x86_64 主要是給虛擬器用的。</p>
+<h4 id="安裝-Package"><a href="#安裝-Package" class="headerlink" title="安裝 Package"></a>安裝 Package</h4><p>接著依據你需要的 package 安裝。除了連上 Chaquopy 的庫，也可以用 whl、requirement 安裝。</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">chaquopy &#123;</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        pip &#123;</span><br><span class="line">            <span class="comment">// A requirement specifier, with or without a version number:</span></span><br><span class="line">            install(<span class="string">&quot;scipy&quot;</span>)</span><br><span class="line">            install(<span class="string">&quot;requests==2.24.0&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// An sdist or wheel filename, relative to the project directory:</span></span><br><span class="line">            install(<span class="string">&quot;MyPackage-1.2.3-py2.py3-none-any.whl&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// A directory containing a setup.py, relative to the project</span></span><br><span class="line">            <span class="comment">// directory (must contain at least one slash):</span></span><br><span class="line">            install(<span class="string">&quot;./MyPackage&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// &quot;-r&quot;` followed by a requirements filename, relative to the</span></span><br><span class="line">            <span class="comment">// project directory:</span></span><br><span class="line">            install(<span class="string">&quot;-r&quot;</span>, <span class="string">&quot;requirements.txt&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>例如我就這麼設定：</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">python &#123;</span><br><span class="line">    pip &#123;</span><br><span class="line">        install <span class="string">&quot;scipy&quot;</span></span><br><span class="line">        install <span class="string">&quot;numpy&quot;</span></span><br><span class="line">        install <span class="string">&quot;opencv-python&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="放入-Python-code"><a href="#放入-Python-code" class="headerlink" title="放入 Python code"></a>放入 Python code</h2><p>Python code 放置在 <code>app\src\main\python</code>，於是我就用這段 code 做範例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">numpy_example</span>():</span><br><span class="line">    a = np.random.rand(<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line">    mean = np.mean(a)</span><br><span class="line">    std = np.std(a)</span><br><span class="line">    <span class="keyword">return</span> mean, std</span><br></pre></td></tr></table></figure>
+<p>基本上返回的是 $2\times 1$ 的陣列，裡面的元素都是 <code>float</code> 型態。 接著我在 <code>MainActivity.kt</code> 這麼做：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(!Python.isStarted()) &#123;</span><br><span class="line">    Python.start(AndroidPlatform(<span class="keyword">this</span>))</span><br><span class="line">    <span class="comment">// 一開始一定要初始化</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> python = Python.getInstance()</span><br><span class="line"><span class="keyword">val</span> pyProject = python.getModule(<span class="string">&quot;test&quot;</span>) <span class="comment">// code 的檔案名字</span></span><br><span class="line"><span class="keyword">val</span> pyObj = pyProject[<span class="string">&quot;numpy_example&quot;</span>] <span class="comment">// code 的 function 名字</span></span><br><span class="line"><span class="keyword">val</span> result = pyObj!!.call()</span><br><span class="line"><span class="keyword">val</span> mean: <span class="built_in">Float</span> = result.asList()[<span class="number">0</span>].toFloat()</span><br><span class="line"><span class="keyword">val</span> std: <span class="built_in">Float</span> = result.asList()[<span class="number">1</span>].toFloat()</span><br><span class="line">Log.d(<span class="string">&quot;Example&quot;</span>, <span class="string">&quot;mean: <span class="variable">$mean</span>&quot;</span>)</span><br><span class="line">Log.d(<span class="string">&quot;Example&quot;</span>, <span class="string">&quot;std: <span class="variable">$std</span>&quot;</span>)</span><br><span class="line"><span class="keyword">val</span> time2 = Instant.now().toEpochMilli()</span><br><span class="line">Log.d(<span class="string">&quot;Example&quot;</span>, <span class="string">&quot;Go: <span class="variable">$time2</span>&quot;</span>)</span><br><span class="line">Log.d(<span class="string">&quot;Example&quot;</span>, <span class="string">&quot;Pass: <span class="subst">$&#123;time2 - time&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>看到結果了！</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Now: 1720161362600</span><br><span class="line">mean: 0.5501784</span><br><span class="line">std: 0.27493423</span><br><span class="line">Go: 1720161363050</span><br><span class="line">Pass: 450</span><br></pre></td></tr></table></figure>
+<p>不過我發現：當輸出的情況變複雜時，在 Kotlin 這裡的處理會愈複雜。如果我把 Python 那邊改成這樣：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">numpy_example</span>():</span><br><span class="line">    a = np.random.rand(<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line">    mean = np.mean(a)</span><br><span class="line">    <span class="keyword">return</span> mean, a</span><br></pre></td></tr></table></figure>
+<p>這時 Kotlin 這邊就要這樣處理</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> mean: <span class="built_in">Float</span> = result.asList()[<span class="number">0</span>].toFloat()</span><br><span class="line"><span class="keyword">val</span> a: Array&lt;FloatArray&gt; = result.asList()[<span class="number">1</span>].asList()</span><br><span class="line">    .map &#123; array -&gt; array.asList()</span><br><span class="line">        .map &#123; it.toFloat() &#125;.toFloatArray()</span><br><span class="line">    &#125;.toTypedArray()</span><br></pre></td></tr></table></figure>
+<p>好耶已經有點瘋狂了，如果你輸出的會是 Tensor 型式，那麼 map 的地方應該會變的非常醜。而其他輸出的型式，就需要再花時間研究：水來土掩、兵來將擋。</p>
+<p>Update: 其實：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> a: Array&lt;FloatArray&gt; = result.asList()[<span class="number">1</span>].toJava(Array&lt;FloatArray&gt;::<span class="keyword">class</span>.java)</span><br></pre></td></tr></table></figure>
+<p>這樣就好，我想得太複雜了。</p>
+<h2 id="檔案大小"><a href="#檔案大小" class="headerlink" title="檔案大小"></a>檔案大小</h2><p><img src="https://i.imgur.com/CSkaXtd.png" alt="Image"></p>
+<p>上面是沒有 Pytohn 的純粹 APK，下面是包了 Python 的 APK，各位可以看到：光是引入 numpy，就多了近 45 MB，所以如果你不節制的控制 Package 的數量，那麼你整個 APK 就會非常肥大。</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>使用 Python 非常方便，隨之而來的代價是 APK 的大小，以及執行速度被拖慢。我是覺得如果有能在 Android 完成的就先使用，如果是 Python 裡面好用的套件，建議先處理完後再傳入。那這樣子，我不如直接在 Android 上面使用 OpenCV 應該更好吧？</p>
+<p>謝謝大家。</p>
+]]></content>
+      <categories>
+        <category>academic</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Android</tag>
+        <tag>Chaquopy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>嘗試能讓官方的 keras_ocr 能在我的 Android Studio Koala 跑起來</title>
     <url>/20240628/3613599130/</url>
     <content><![CDATA[<h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>在發現 ML KIT 可能沒辦法滿足我要對七段顯示器處理光學文字辨識後，我發現 TensorFlow 其實有給個範例，是關於 ocr 訓練出來的 tensorFlowLite 如何應用到手機上面。不過，當把專案匯入至我的 Android Studio 時，發現因為這個範例專案的 IDE 版本是 Android Studio 4.2，因此碰到許多問題。我會在下面 po 上我跟 ChatGpt 來回對話的記錄，並在這裡 po 上有更改的 code 以方便以後的我與過來人參考</p>
@@ -174,73 +241,6 @@
       <tags>
         <tag>diary</tag>
         <tag>image process</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>研究如何在 Android 跑 Python</title>
-    <url>/20240705/2386244310/</url>
-    <content><![CDATA[<p>想在 Android 上面跑 Python 是滿奇特的，但是研究研究也無妨！</p>
-<span id="more"></span>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我為了要實行影像辨識的方法，因此在網路上找了許多條路。不過影像辨識常常用 Python，很多教學也是使用 Python，我就想說：我可不可以在 Android 上面執行 Python 呢？因此我就尋找相關的套件，以及一些 Python 執行的注意事項。</p>
-<h2 id="相關套件-Chaquopy"><a href="#相關套件-Chaquopy" class="headerlink" title="相關套件 - Chaquopy"></a>相關套件 - Chaquopy</h2><p>目前看到我比較滿意的是 Chaquopy，我覺得有幾點是滿不錯的;</p>
-<ol>
-<li><p>支援知名套件：目前看到他的<a href="https://chaquo.com/pypi-13.1/">支援列表</a>，知名的 numpy、tensorFlow、matplotlib 等等的都有，也說支援超過 90% 以上 PyPl 所列出的套件。</p>
-</li>
-<li><p>方便整合進去 AndroidL：一開始看到網路上的<a href="https://medium.com/@k1992313/python-for-android-%E8%B8%A9%E9%9B%B7%E5%BF%83%E5%BE%97-f07ac9c106ac">採雷心得</a>，發現要整合是語言是很困難的事情。剛好 Chaquopy 幫我們解決這一哩路，當然就使用 Chaquopy 了。</p>
-</li>
-</ol>
-<h2 id="開始安裝"><a href="#開始安裝" class="headerlink" title="開始安裝"></a>開始安裝</h2><p>參考資料：</p>
-<ul>
-<li>官方網站：<a href="https://chaquo.com/chaquopy/doc/current/android.html">https://chaquo.com/chaquopy/doc/current/android.html</a></li>
-<li>其餘資料：<a href="https://hackmd.io/@kennethHung/S1mMZThps">https://hackmd.io/@kennethHung/S1mMZThps</a></li>
-</ul>
-<h3 id="設定-Project-層級的-build-gradle"><a href="#設定-Project-層級的-build-gradle" class="headerlink" title="設定 Project 層級的 build.gradle"></a>設定 Project 層級的 build.gradle</h3><p>新增設定：</p>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id(<span class="string">&quot;com.chaquo.python&quot;</span>) version <span class="string">&quot;15.0.1&quot;</span> apply <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="設定-Module-層級的-build-gradle"><a href="#設定-Module-層級的-build-gradle" class="headerlink" title="設定 Module 層級的 build.gradle"></a>設定 Module 層級的 build.gradle</h3><p>要在 plugins 地方新增：</p>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id (<span class="string">&quot;com.chaquo.python&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然後你直接編譯後會看到：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">A problem occurred configuring project &#x27;:app&#x27;.</span><br><span class="line">&gt; Variant &#x27;debug&#x27;: Chaquopy requires ndk.abiFilters: you may want to add it to android.defaultConfig.</span><br></pre></td></tr></table></figure>
-<p>因此我們還要在 android -&gt; defaultConfig 裡新增 ndk 選項：</p>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    ......</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        ......</span><br><span class="line">        ndk &#123;</span><br><span class="line">            abiFilters <span class="string">&quot;arm64-v8a&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>如果有在開發 Android APP，那麼會知道手機 CPU 的支援有分四種：</p>
-<ul>
-<li>armeabi-v7a, 32-bit arch，幾乎涵蓋所有android 裝置。</li>
-<li>arm64-v8a, 64-bit arch，涵蓋2018 後的大部分裝置。</li>
-<li>x86, Android 模擬器使用。</li>
-<li>x86_64, Android 模擬器使用。</li>
-</ul>
-<p>要注意：支援的越多，Chaquopy 就會複製相對應的分數，會讓 APK 容量變大。</p>
-<p><img src="https://i.imgur.com/iIjaFWs.png" alt="Image"><br>可以看到：x86_64 主要是給虛擬器用的。</p>
-<h4 id="安裝-Package"><a href="#安裝-Package" class="headerlink" title="安裝 Package"></a>安裝 Package</h4><p>接著依據你需要的 package 安裝。除了連上 Chaquopy 的庫，也可以用 whl、requirement 安裝。</p>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">chaquopy &#123;</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        pip &#123;</span><br><span class="line">            <span class="comment">// A requirement specifier, with or without a version number:</span></span><br><span class="line">            install(<span class="string">&quot;scipy&quot;</span>)</span><br><span class="line">            install(<span class="string">&quot;requests==2.24.0&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// An sdist or wheel filename, relative to the project directory:</span></span><br><span class="line">            install(<span class="string">&quot;MyPackage-1.2.3-py2.py3-none-any.whl&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// A directory containing a setup.py, relative to the project</span></span><br><span class="line">            <span class="comment">// directory (must contain at least one slash):</span></span><br><span class="line">            install(<span class="string">&quot;./MyPackage&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// &quot;-r&quot;` followed by a requirements filename, relative to the</span></span><br><span class="line">            <span class="comment">// project directory:</span></span><br><span class="line">            install(<span class="string">&quot;-r&quot;</span>, <span class="string">&quot;requirements.txt&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>例如我就這麼設定：</p>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">python &#123;</span><br><span class="line">    pip &#123;</span><br><span class="line">        install <span class="string">&quot;scipy&quot;</span></span><br><span class="line">        install <span class="string">&quot;numpy&quot;</span></span><br><span class="line">        install <span class="string">&quot;opencv-python&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="放入-Python-code"><a href="#放入-Python-code" class="headerlink" title="放入 Python code"></a>放入 Python code</h2><p>Python code 放置在 <code>app\src\main\python</code>，於是我就用這段 code 做範例：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">numpy_example</span>():</span><br><span class="line">    a = np.random.rand(<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line">    mean = np.mean(a)</span><br><span class="line">    std = np.std(a)</span><br><span class="line">    <span class="keyword">return</span> mean, std</span><br></pre></td></tr></table></figure>
-<p>基本上返回的是 $2\times 1$ 的陣列，裡面的元素都是 <code>float</code> 型態。 接著我在 <code>MainActivity.kt</code> 這麼做：</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(!Python.isStarted()) &#123;</span><br><span class="line">    Python.start(AndroidPlatform(<span class="keyword">this</span>))</span><br><span class="line">    <span class="comment">// 一開始一定要初始化</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> python = Python.getInstance()</span><br><span class="line"><span class="keyword">val</span> pyProject = python.getModule(<span class="string">&quot;test&quot;</span>) <span class="comment">// code 的檔案名字</span></span><br><span class="line"><span class="keyword">val</span> pyObj = pyProject[<span class="string">&quot;numpy_example&quot;</span>] <span class="comment">// code 的 function 名字</span></span><br><span class="line"><span class="keyword">val</span> result = pyObj!!.call()</span><br><span class="line"><span class="keyword">val</span> mean: <span class="built_in">Float</span> = result.asList()[<span class="number">0</span>].toFloat()</span><br><span class="line"><span class="keyword">val</span> std: <span class="built_in">Float</span> = result.asList()[<span class="number">1</span>].toFloat()</span><br><span class="line">Log.d(<span class="string">&quot;Example&quot;</span>, <span class="string">&quot;mean: <span class="variable">$mean</span>&quot;</span>)</span><br><span class="line">Log.d(<span class="string">&quot;Example&quot;</span>, <span class="string">&quot;std: <span class="variable">$std</span>&quot;</span>)</span><br><span class="line"><span class="keyword">val</span> time2 = Instant.now().toEpochMilli()</span><br><span class="line">Log.d(<span class="string">&quot;Example&quot;</span>, <span class="string">&quot;Go: <span class="variable">$time2</span>&quot;</span>)</span><br><span class="line">Log.d(<span class="string">&quot;Example&quot;</span>, <span class="string">&quot;Pass: <span class="subst">$&#123;time2 - time&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>看到結果了！</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Now: 1720161362600</span><br><span class="line">mean: 0.5501784</span><br><span class="line">std: 0.27493423</span><br><span class="line">Go: 1720161363050</span><br><span class="line">Pass: 450</span><br></pre></td></tr></table></figure>
-<p>不過我發現：當輸出的情況變複雜時，在 Kotlin 這裡的處理會愈複雜。如果我把 Python 那邊改成這樣：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">numpy_example</span>():</span><br><span class="line">    a = np.random.rand(<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line">    mean = np.mean(a)</span><br><span class="line">    <span class="keyword">return</span> mean, a</span><br></pre></td></tr></table></figure>
-<p>這時 Kotlin 這邊就要這樣處理</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> mean: <span class="built_in">Float</span> = result.asList()[<span class="number">0</span>].toFloat()</span><br><span class="line"><span class="keyword">val</span> a: Array&lt;FloatArray&gt; = result.asList()[<span class="number">1</span>].asList()</span><br><span class="line">    .map &#123; array -&gt; array.asList()</span><br><span class="line">        .map &#123; it.toFloat() &#125;.toFloatArray()</span><br><span class="line">    &#125;.toTypedArray()</span><br></pre></td></tr></table></figure>
-<p>好耶已經有點瘋狂了，如果你輸出的會是 Tensor 型式，那麼 map 的地方應該會變的非常醜。而其他輸出的型式，就需要再花時間研究：水來土掩、兵來將擋。</p>
-<p>Update: 其實：</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> a: Array&lt;FloatArray&gt; = result.asList()[<span class="number">1</span>].toJava(Array&lt;FloatArray&gt;::<span class="keyword">class</span>.java)</span><br></pre></td></tr></table></figure>
-<p>這樣就好，我想得太複雜了。</p>
-<h2 id="檔案大小"><a href="#檔案大小" class="headerlink" title="檔案大小"></a>檔案大小</h2><p><img src="https://i.imgur.com/CSkaXtd.png" alt="Image"></p>
-<p>上面是沒有 Pytohn 的純粹 APK，下面是包了 Python 的 APK，各位可以看到：光是引入 numpy，就多了近 45 MB，所以如果你不節制的控制 Package 的數量，那麼你整個 APK 就會非常肥大。</p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>使用 Python 非常方便，隨之而來的代價是 APK 的大小，以及執行速度被拖慢。我是覺得如果有能在 Android 完成的就先使用，如果是 Python 裡面好用的套件，建議先處理完後再傳入。那這樣子，我不如直接在 Android 上面使用 OpenCV 應該更好吧？</p>
-<p>謝謝大家。</p>
-]]></content>
-      <categories>
-        <category>academic</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Android</tag>
-        <tag>Chaquopy</tag>
       </tags>
   </entry>
   <entry>
