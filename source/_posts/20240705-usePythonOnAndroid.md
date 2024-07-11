@@ -1,11 +1,11 @@
 ---
 title: 研究如何在 Android 跑 Python
 tags: 
-- python
+- Python
 - Android
 - Chaquopy
 categories:
-- academic
+- Academic
 abbrlink: 2386244310
 date: 2024-07-05 09:33:21
 mathjax: true

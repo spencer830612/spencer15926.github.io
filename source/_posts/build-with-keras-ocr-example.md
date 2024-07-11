@@ -5,9 +5,9 @@ tags:
   - Keras
   - Ocr
   - Android Studio Koala
-  - gradle
+  - Gradle
 categories:
-  - academic
+  - Academic
 abbrlink: 3613599130
 ---
 

@@ -3,7 +3,7 @@ title: 想利用 ppocrlabel 做圖像訓練的前置步驟
 tags:
   - ppocrlabel
   - paddlepaddle
-  - tensorFlowLite
+  - TensorFlowLite
 categories:
   - academic
 abbrlink: 1718242579

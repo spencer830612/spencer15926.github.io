@@ -1,11 +1,11 @@
 ---
 title: 有可能利用 MATLAB 生成 C++ 程式碼給 Android 用嗎？
 tags:
-  - image process
+  - Image process
   - NDK
   - MATLAB
 categories:
-  - academic
+  - Academic
 abbrlink: 2876724007
 date: 2024-07-04 16:54:07
 ---

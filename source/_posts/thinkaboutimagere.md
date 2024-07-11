@@ -1,10 +1,10 @@
 ---
 title: 影像辨識技術之決策
 tags:
-  - diary
-  - image process
+  - Diary
+  - Image process
 categories:
-  - academic
+  - Academic
 abbrlink: 3247877407
 date: 2024-07-03 17:39:24
 ---
