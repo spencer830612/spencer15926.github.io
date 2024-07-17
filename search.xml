@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>今日工作心得</title>
+    <url>/20240626/1620941357/</url>
+    <content><![CDATA[<p>我真的覺得濫用靜態變數真的會造成偵錯的災難……當然，我負責的 App 習慣只用一個 activity 就負責所有頁面的內容，但是因為不同人接手，再加上沒有交接習慣的緣故，因此容易有重工的情形。</p>
+<p>全部是靜態變數（static variable），因此我非常難知道這個變數是為何而變，我必須要在可能的入口全部埋一次偵錯日誌，再透過二分法慢慢篩出真正的入口。</p>
+<p>我希望自己做程式時可以辦到：</p>
+<ul>
+<li><p>不濫用靜態變數：靜態變數只用在常數。在設計時，就要先考慮好這些需要傳遞變數的情形，不要用靜態變數迴避此問題。</p>
+</li>
+<li><p>不要為了省變數個數而重複使用：原先的 App 會為了達到此目的，把不同意義的內容用同個變數去承載；再加上靜態變數的濫用問題，導致寫程式與維護上更令人崩潰。</p>
+</li>
+</ul>
+<p>我最近加入了程人頻道，發現裡面有前人整理的面試秘笈，希望我能有效吸收、找到更好的工作！</p>
+]]></content>
+      <categories>
+        <category>Diary</category>
+      </categories>
+      <tags>
+        <tag>Diary</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>想利用 ppocrlabel 做圖像訓練的前置步驟</title>
     <url>/20240626/1718242579/</url>
     <content><![CDATA[<p>原本公司想要用影像去辨識七段顯示器，剛好網路上看到有可以用的<a href="https://github.com/renjithsasidharan/seven-segment-ocr">連結</a>，於是開始了前途多舛的時間，結果終於好了。不過很多步驟我來不及記起來，但至少這些注意事項已經夠多了！<br><span id="more"></span></p>
@@ -28,33 +49,12 @@
 <p>加進去後，就好啦！</p>
 ]]></content>
       <categories>
-        <category>academic</category>
+        <category>Academic</category>
       </categories>
       <tags>
         <tag>ppocrlabel</tag>
         <tag>paddlepaddle</tag>
         <tag>TensorFlowLite</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>今日工作心得</title>
-    <url>/20240626/1620941357/</url>
-    <content><![CDATA[<p>我真的覺得濫用靜態變數真的會造成偵錯的災難……當然，我負責的 App 習慣只用一個 activity 就負責所有頁面的內容，但是因為不同人接手，再加上沒有交接習慣的緣故，因此容易有重工的情形。</p>
-<p>全部是靜態變數（static variable），因此我非常難知道這個變數是為何而變，我必須要在可能的入口全部埋一次偵錯日誌，再透過二分法慢慢篩出真正的入口。</p>
-<p>我希望自己做程式時可以辦到：</p>
-<ul>
-<li><p>不濫用靜態變數：靜態變數只用在常數。在設計時，就要先考慮好這些需要傳遞變數的情形，不要用靜態變數迴避此問題。</p>
-</li>
-<li><p>不要為了省變數個數而重複使用：原先的 App 會為了達到此目的，把不同意義的內容用同個變數去承載；再加上靜態變數的濫用問題，導致寫程式與維護上更令人崩潰。</p>
-</li>
-</ul>
-<p>我最近加入了程人頻道，發現裡面有前人整理的面試秘笈，希望我能有效吸收、找到更好的工作！</p>
-]]></content>
-      <categories>
-        <category>Diary</category>
-      </categories>
-      <tags>
-        <tag>Diary</tag>
       </tags>
   </entry>
   <entry>
@@ -103,33 +103,6 @@
       <tags>
         <tag>Diary</tag>
         <tag>Image recognize</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>真的需要在 Gradle 裡引用機密資料但是不想上傳至 GitHub 怎麼辦？</title>
-    <url>/20240711/1438358789/</url>
-    <content><![CDATA[<p>真的需要在 Gradle 裡引用機密資料但是不想上傳至 GitHub 怎麼辦？就不想把機密資料放上 GitHub！</p>
-<span id="more"></span>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>生成的 APK 都是有上鑰匙加密的，但是希望平常用 Debug 版本時，可以直接無縫安裝，不需要移除再安裝，因此我會選擇把金鑰的訊息直接放在 Gradle 裡面。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        getByName(<span class="string">&quot;debug&quot;</span>) &#123;</span><br><span class="line">            keyAlias = <span class="string">&quot;KEY&quot;</span></span><br><span class="line">            keyPassword = <span class="string">&quot;12345678&quot;</span></span><br><span class="line">            storePassword = <span class="string">&quot;12345678&quot;</span></span><br><span class="line">            storeFile = file(<span class="string">&quot;F:\\Key&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但是這種東西直接上傳到 GitHub 實在是太不安全了！如果流出去了，那麼別人就可以用這把金鑰上傳簽署過的 APK 至 PlayStore 上面。</p>
-<h2 id="作法"><a href="#作法" class="headerlink" title="作法"></a>作法</h2><p>因此，我們希望額外創造一個檔案，放入機密資料後再額外從原本的檔案中引用，並且把額外的檔案加入 .gitignore 裡，防止機密檔案被 git 上去。</p>
-<h3 id="準備"><a href="#準備" class="headerlink" title="準備"></a>準備</h3><p>我是新創 <code>apikeys.properties</code> 於同份專案裡，我是放在跟 <code>.gitignore</code> 同個層級</p>
-<h3 id="放入資料"><a href="#放入資料" class="headerlink" title="放入資料"></a>放入資料</h3><p>接著在 <code>apikeys.properties</code> 放入機密資料</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">keyAlias = KEY</span><br><span class="line">keyPassword = 12345678</span><br><span class="line">storePassword = 12345678</span><br><span class="line">storeFile = F:\\Key</span><br></pre></td></tr></table></figure>
-<p>這裡的概念是 Map，因此 Key 的部分就自己命名。</p>
-<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>接著取代本來的 Gradle 裡放置帳密的地方。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.jetbrains.kotlin.konan.properties.Properties</span><br><span class="line"></span><br><span class="line">.......</span><br><span class="line"></span><br><span class="line">android&#123;</span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        getByName(<span class="string">&quot;debug&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">val</span> keyStoreFile = project.rootProject.file(<span class="string">&quot;apikeys.properties&quot;</span>)</span><br><span class="line">            <span class="keyword">val</span> properties = Properties().apply &#123;</span><br><span class="line">                load(keyStoreFile.inputStream())</span><br><span class="line">            &#125;</span><br><span class="line">            keyAlias = properties.getProperty(<span class="string">&quot;keyAlias&quot;</span>)</span><br><span class="line">            keyPassword = properties.getProperty(<span class="string">&quot;keyPassword&quot;</span>)</span><br><span class="line">            storePassword = properties.getProperty(<span class="string">&quot;storePassword&quot;</span>)</span><br><span class="line">            storeFile = file(properties.getProperty(<span class="string">&quot;storeFile&quot;</span>))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="排除上傳"><a href="#排除上傳" class="headerlink" title="排除上傳"></a>排除上傳</h3><p>記得要排除 <code>apikeys.properties</code> 於同步之外。也就是要加入 <code>.gitignore</code>。</p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>用這個方法，防止上傳機密資料。如果同事需要用的話，我想就額外再傳遞機密的檔案即可。至少不要上傳至別人的伺服器裡吧！</p>
-]]></content>
-      <categories>
-        <category>Academic</category>
-      </categories>
-      <tags>
-        <tag>GitHub</tag>
-        <tag>Gradle</tag>
-        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -194,48 +167,9 @@
         <category>Academic</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>Python</tag>
+        <tag>Android</tag>
         <tag>Chaquopy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>嘗試能讓官方的 keras_ocr 能在我的 Android Studio Koala 跑起來</title>
-    <url>/20240628/3613599130/</url>
-    <content><![CDATA[<h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>在發現 ML KIT 可能沒辦法滿足我要對七段顯示器處理光學文字辨識後，我發現 TensorFlow 其實有給個範例，是關於 ocr 訓練出來的 tensorFlowLite 如何應用到手機上面。不過，當把專案匯入至我的 Android Studio 時，發現因為這個範例專案的 IDE 版本是 Android Studio 4.2，因此碰到許多問題。我會在下面 po 上我跟 ChatGpt 來回對話的記錄，並在這裡 po 上有更改的 code 以方便以後的我與過來人參考</p>
-<p>這是我與 ChatGPT 的<a href="https://chatgpt.com/share/a5dc6ce6-ea42-462c-9894-69ed70242feb">對話</a>，可以去看看。</p>
-<span id="more"></span>
-<hr>
-<h3 id="更改檔案-1：app-build-gradle"><a href="#更改檔案-1：app-build-gradle" class="headerlink" title="更改檔案 1：app:build.gradle"></a>更改檔案 1：app:build.gradle</h3><p>主要的變更有</p>
-<ul>
-<li>添加 namespace</li>
-<li>手動設置 java 版本：因為我的 IDE 版本設置是 17，因此我就改成 17。</li>
-<li>加上 viewBinding true：其實我覺得應該是不用，因為專案內的是用最基本的方式指派物件。</li>
-</ul>
-<p><a href="https://www.diffchecker.com/dotkOibz/">內文比較的詳細連結</a></p>
-<hr>
-<h3 id="更改檔案-2：gradle-properties"><a href="#更改檔案-2：gradle-properties" class="headerlink" title="更改檔案 2：gradle.properties"></a>更改檔案 2：gradle.properties</h3><p>主要的變更是指定 java jdk 的位置。雖然 IDE 有指定，但我不知道為什麼這裡要再指定一次，編譯才會過。</p>
-<p><a href="https://www.diffchecker.com/LkYRSIbs/">內文比較的詳細連結</a></p>
-<hr>
-<h3 id="更改檔案-3：project-build-gradle"><a href="#更改檔案-3：project-build-gradle" class="headerlink" title="更改檔案 3：project: build.gradle"></a>更改檔案 3：project: build.gradle</h3><p>主要的變更有</p>
-<ul>
-<li>變更 gradle 版本號：不同的 Android Studio 有不同的 gradle 版本指定，因此要改</li>
-<li>變更 gradle-download-task：我就順勢升級了</li>
-</ul>
-<p><a href="https://www.diffchecker.com/LVuvM6FT/">內文比較的詳細連結</a></p>
-<hr>
-<h3 id="更改檔案-4：gradle-wrapper-properties"><a href="#更改檔案-4：gradle-wrapper-properties" class="headerlink" title="更改檔案 4：gradle-wrapper.properties"></a>更改檔案 4：gradle-wrapper.properties</h3><p>主要的變更是修改 gradle 的版號。</p>
-<p><a href="https://www.diffchecker.com/icExyeaN/">內文比較的詳細連結</a></p>
-<p>大坑大雷，但最後我去更新所有 dependencies 的版本號，也沒有問題了！</p>
-]]></content>
-      <categories>
-        <category>Academic</category>
-      </categories>
-      <tags>
-        <tag>Gradle</tag>
-        <tag>Keras</tag>
-        <tag>Ocr</tag>
-        <tag>Android Studio Koala</tag>
       </tags>
   </entry>
   <entry>
@@ -287,6 +221,33 @@
       </tags>
   </entry>
   <entry>
+    <title>真的需要在 Gradle 裡引用機密資料但是不想上傳至 GitHub 怎麼辦？</title>
+    <url>/20240711/1438358789/</url>
+    <content><![CDATA[<p>真的需要在 Gradle 裡引用機密資料但是不想上傳至 GitHub 怎麼辦？就不想把機密資料放上 GitHub！</p>
+<span id="more"></span>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>生成的 APK 都是有上鑰匙加密的，但是希望平常用 Debug 版本時，可以直接無縫安裝，不需要移除再安裝，因此我會選擇把金鑰的訊息直接放在 Gradle 裡面。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        getByName(<span class="string">&quot;debug&quot;</span>) &#123;</span><br><span class="line">            keyAlias = <span class="string">&quot;KEY&quot;</span></span><br><span class="line">            keyPassword = <span class="string">&quot;12345678&quot;</span></span><br><span class="line">            storePassword = <span class="string">&quot;12345678&quot;</span></span><br><span class="line">            storeFile = file(<span class="string">&quot;F:\\Key&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是這種東西直接上傳到 GitHub 實在是太不安全了！如果流出去了，那麼別人就可以用這把金鑰上傳簽署過的 APK 至 PlayStore 上面。</p>
+<h2 id="作法"><a href="#作法" class="headerlink" title="作法"></a>作法</h2><p>因此，我們希望額外創造一個檔案，放入機密資料後再額外從原本的檔案中引用，並且把額外的檔案加入 .gitignore 裡，防止機密檔案被 git 上去。</p>
+<h3 id="準備"><a href="#準備" class="headerlink" title="準備"></a>準備</h3><p>我是新創 <code>apikeys.properties</code> 於同份專案裡，我是放在跟 <code>.gitignore</code> 同個層級</p>
+<h3 id="放入資料"><a href="#放入資料" class="headerlink" title="放入資料"></a>放入資料</h3><p>接著在 <code>apikeys.properties</code> 放入機密資料</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">keyAlias = KEY</span><br><span class="line">keyPassword = 12345678</span><br><span class="line">storePassword = 12345678</span><br><span class="line">storeFile = F:\\Key</span><br></pre></td></tr></table></figure>
+<p>這裡的概念是 Map，因此 Key 的部分就自己命名。</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>接著取代本來的 Gradle 裡放置帳密的地方。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.jetbrains.kotlin.konan.properties.Properties</span><br><span class="line"></span><br><span class="line">.......</span><br><span class="line"></span><br><span class="line">android&#123;</span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        getByName(<span class="string">&quot;debug&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">val</span> keyStoreFile = project.rootProject.file(<span class="string">&quot;apikeys.properties&quot;</span>)</span><br><span class="line">            <span class="keyword">val</span> properties = Properties().apply &#123;</span><br><span class="line">                load(keyStoreFile.inputStream())</span><br><span class="line">            &#125;</span><br><span class="line">            keyAlias = properties.getProperty(<span class="string">&quot;keyAlias&quot;</span>)</span><br><span class="line">            keyPassword = properties.getProperty(<span class="string">&quot;keyPassword&quot;</span>)</span><br><span class="line">            storePassword = properties.getProperty(<span class="string">&quot;storePassword&quot;</span>)</span><br><span class="line">            storeFile = file(properties.getProperty(<span class="string">&quot;storeFile&quot;</span>))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="排除上傳"><a href="#排除上傳" class="headerlink" title="排除上傳"></a>排除上傳</h3><p>記得要排除 <code>apikeys.properties</code> 於同步之外。也就是要加入 <code>.gitignore</code>。</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>用這個方法，防止上傳機密資料。如果同事需要用的話，我想就額外再傳遞機密的檔案即可。至少不要上傳至別人的伺服器裡吧！</p>
+]]></content>
+      <categories>
+        <category>Academic</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>GitHub</tag>
+        <tag>Gradle</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>有可能利用 MATLAB 生成 C++ 程式碼給 Android 用嗎？</title>
     <url>/20240704/2876724007/</url>
     <content><![CDATA[<p>關於對 MATLAB 不太熟，以及對 MATLAB 這條路感到幻滅的嘗試過程。</p>
@@ -316,6 +277,45 @@
         <tag>Image process</tag>
         <tag>NDK</tag>
         <tag>MATLAB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>嘗試能讓官方的 keras_ocr 能在我的 Android Studio Koala 跑起來</title>
+    <url>/20240628/3613599130/</url>
+    <content><![CDATA[<h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>在發現 ML KIT 可能沒辦法滿足我要對七段顯示器處理光學文字辨識後，我發現 TensorFlow 其實有給個範例，是關於 ocr 訓練出來的 tensorFlowLite 如何應用到手機上面。不過，當把專案匯入至我的 Android Studio 時，發現因為這個範例專案的 IDE 版本是 Android Studio 4.2，因此碰到許多問題。我會在下面 po 上我跟 ChatGpt 來回對話的記錄，並在這裡 po 上有更改的 code 以方便以後的我與過來人參考</p>
+<p>這是我與 ChatGPT 的<a href="https://chatgpt.com/share/a5dc6ce6-ea42-462c-9894-69ed70242feb">對話</a>，可以去看看。</p>
+<span id="more"></span>
+<hr>
+<h3 id="更改檔案-1：app-build-gradle"><a href="#更改檔案-1：app-build-gradle" class="headerlink" title="更改檔案 1：app:build.gradle"></a>更改檔案 1：app:build.gradle</h3><p>主要的變更有</p>
+<ul>
+<li>添加 namespace</li>
+<li>手動設置 java 版本：因為我的 IDE 版本設置是 17，因此我就改成 17。</li>
+<li>加上 viewBinding true：其實我覺得應該是不用，因為專案內的是用最基本的方式指派物件。</li>
+</ul>
+<p><a href="https://www.diffchecker.com/dotkOibz/">內文比較的詳細連結</a></p>
+<hr>
+<h3 id="更改檔案-2：gradle-properties"><a href="#更改檔案-2：gradle-properties" class="headerlink" title="更改檔案 2：gradle.properties"></a>更改檔案 2：gradle.properties</h3><p>主要的變更是指定 java jdk 的位置。雖然 IDE 有指定，但我不知道為什麼這裡要再指定一次，編譯才會過。</p>
+<p><a href="https://www.diffchecker.com/LkYRSIbs/">內文比較的詳細連結</a></p>
+<hr>
+<h3 id="更改檔案-3：project-build-gradle"><a href="#更改檔案-3：project-build-gradle" class="headerlink" title="更改檔案 3：project: build.gradle"></a>更改檔案 3：project: build.gradle</h3><p>主要的變更有</p>
+<ul>
+<li>變更 gradle 版本號：不同的 Android Studio 有不同的 gradle 版本指定，因此要改</li>
+<li>變更 gradle-download-task：我就順勢升級了</li>
+</ul>
+<p><a href="https://www.diffchecker.com/LVuvM6FT/">內文比較的詳細連結</a></p>
+<hr>
+<h3 id="更改檔案-4：gradle-wrapper-properties"><a href="#更改檔案-4：gradle-wrapper-properties" class="headerlink" title="更改檔案 4：gradle-wrapper.properties"></a>更改檔案 4：gradle-wrapper.properties</h3><p>主要的變更是修改 gradle 的版號。</p>
+<p><a href="https://www.diffchecker.com/icExyeaN/">內文比較的詳細連結</a></p>
+<p>大坑大雷，但最後我去更新所有 dependencies 的版本號，也沒有問題了！</p>
+]]></content>
+      <categories>
+        <category>Academic</category>
+      </categories>
+      <tags>
+        <tag>Gradle</tag>
+        <tag>Keras</tag>
+        <tag>Ocr</tag>
+        <tag>Android Studio Koala</tag>
       </tags>
   </entry>
   <entry>
