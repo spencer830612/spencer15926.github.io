@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://spencer830612.github.io/20240717/105329673/</loc>
+    
+    <lastmod>2024-07-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://spencer830612.github.io/20240626/1718242579/</loc>
     
     <lastmod>2024-07-17</lastmod>
@@ -121,127 +130,148 @@
 
   <url>
     <loc>https://spencer830612.github.io/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>https://spencer830612.github.io/tags/Diary/</loc>
-    <lastmod>2024-07-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://spencer830612.github.io/tags/ppocrlabel/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/paddlepaddle/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/TensorFlowLite/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://spencer830612.github.io/tags/Diary/</loc>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/Image-recognize/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/Python/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/Android/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/Chaquopy/</loc>
-    <lastmod>2024-07-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://spencer830612.github.io/tags/OpenCv/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/GitHub/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/Gradle/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://spencer830612.github.io/tags/OpenCv/</loc>
+    <lastmod>2024-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://spencer830612.github.io/tags/Exception/</loc>
+    <lastmod>2024-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://spencer830612.github.io/tags/ExceptionInInitializerError/</loc>
+    <lastmod>2024-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://spencer830612.github.io/tags/Static/</loc>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/Image-process/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/NDK/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/MATLAB/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/Keras/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/Ocr/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://spencer830612.github.io/tags/Android-Studio-Koala/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -249,15 +279,15 @@
 
   
   <url>
-    <loc>https://spencer830612.github.io/categories/Diary/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <loc>https://spencer830612.github.io/categories/Academic/</loc>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://spencer830612.github.io/categories/Academic/</loc>
-    <lastmod>2024-07-17</lastmod>
+    <loc>https://spencer830612.github.io/categories/Diary/</loc>
+    <lastmod>2024-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

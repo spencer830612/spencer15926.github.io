@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>今日工作心得</title>
-    <url>/20240626/1620941357/</url>
-    <content><![CDATA[<p>我真的覺得濫用靜態變數真的會造成偵錯的災難……當然，我負責的 App 習慣只用一個 activity 就負責所有頁面的內容，但是因為不同人接手，再加上沒有交接習慣的緣故，因此容易有重工的情形。</p>
-<p>全部是靜態變數（static variable），因此我非常難知道這個變數是為何而變，我必須要在可能的入口全部埋一次偵錯日誌，再透過二分法慢慢篩出真正的入口。</p>
-<p>我希望自己做程式時可以辦到：</p>
-<ul>
-<li><p>不濫用靜態變數：靜態變數只用在常數。在設計時，就要先考慮好這些需要傳遞變數的情形，不要用靜態變數迴避此問題。</p>
-</li>
-<li><p>不要為了省變數個數而重複使用：原先的 App 會為了達到此目的，把不同意義的內容用同個變數去承載；再加上靜態變數的濫用問題，導致寫程式與維護上更令人崩潰。</p>
-</li>
-</ul>
-<p>我最近加入了程人頻道，發現裡面有前人整理的面試秘笈，希望我能有效吸收、找到更好的工作！</p>
-]]></content>
-      <categories>
-        <category>Diary</category>
-      </categories>
-      <tags>
-        <tag>Diary</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>想利用 ppocrlabel 做圖像訓練的前置步驟</title>
     <url>/20240626/1718242579/</url>
     <content><![CDATA[<p>原本公司想要用影像去辨識七段顯示器，剛好網路上看到有可以用的<a href="https://github.com/renjithsasidharan/seven-segment-ocr">連結</a>，於是開始了前途多舛的時間，結果終於好了。不過很多步驟我來不及記起來，但至少這些注意事項已經夠多了！<br><span id="more"></span></p>
@@ -55,6 +34,27 @@
         <tag>ppocrlabel</tag>
         <tag>paddlepaddle</tag>
         <tag>TensorFlowLite</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>今日工作心得</title>
+    <url>/20240626/1620941357/</url>
+    <content><![CDATA[<p>我真的覺得濫用靜態變數真的會造成偵錯的災難……當然，我負責的 App 習慣只用一個 activity 就負責所有頁面的內容，但是因為不同人接手，再加上沒有交接習慣的緣故，因此容易有重工的情形。</p>
+<p>全部是靜態變數（static variable），因此我非常難知道這個變數是為何而變，我必須要在可能的入口全部埋一次偵錯日誌，再透過二分法慢慢篩出真正的入口。</p>
+<p>我希望自己做程式時可以辦到：</p>
+<ul>
+<li><p>不濫用靜態變數：靜態變數只用在常數。在設計時，就要先考慮好這些需要傳遞變數的情形，不要用靜態變數迴避此問題。</p>
+</li>
+<li><p>不要為了省變數個數而重複使用：原先的 App 會為了達到此目的，把不同意義的內容用同個變數去承載；再加上靜態變數的濫用問題，導致寫程式與維護上更令人崩潰。</p>
+</li>
+</ul>
+<p>我最近加入了程人頻道，發現裡面有前人整理的面試秘笈，希望我能有效吸收、找到更好的工作！</p>
+]]></content>
+      <categories>
+        <category>Diary</category>
+      </categories>
+      <tags>
+        <tag>Diary</tag>
       </tags>
   </entry>
   <entry>
@@ -173,6 +173,33 @@
       </tags>
   </entry>
   <entry>
+    <title>真的需要在 Gradle 裡引用機密資料但是不想上傳至 GitHub 怎麼辦？</title>
+    <url>/20240711/1438358789/</url>
+    <content><![CDATA[<p>真的需要在 Gradle 裡引用機密資料但是不想上傳至 GitHub 怎麼辦？就不想把機密資料放上 GitHub！</p>
+<span id="more"></span>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>生成的 APK 都是有上鑰匙加密的，但是希望平常用 Debug 版本時，可以直接無縫安裝，不需要移除再安裝，因此我會選擇把金鑰的訊息直接放在 Gradle 裡面。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        getByName(<span class="string">&quot;debug&quot;</span>) &#123;</span><br><span class="line">            keyAlias = <span class="string">&quot;KEY&quot;</span></span><br><span class="line">            keyPassword = <span class="string">&quot;12345678&quot;</span></span><br><span class="line">            storePassword = <span class="string">&quot;12345678&quot;</span></span><br><span class="line">            storeFile = file(<span class="string">&quot;F:\\Key&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是這種東西直接上傳到 GitHub 實在是太不安全了！如果流出去了，那麼別人就可以用這把金鑰上傳簽署過的 APK 至 PlayStore 上面。</p>
+<h2 id="作法"><a href="#作法" class="headerlink" title="作法"></a>作法</h2><p>因此，我們希望額外創造一個檔案，放入機密資料後再額外從原本的檔案中引用，並且把額外的檔案加入 .gitignore 裡，防止機密檔案被 git 上去。</p>
+<h3 id="準備"><a href="#準備" class="headerlink" title="準備"></a>準備</h3><p>我是新創 <code>apikeys.properties</code> 於同份專案裡，我是放在跟 <code>.gitignore</code> 同個層級</p>
+<h3 id="放入資料"><a href="#放入資料" class="headerlink" title="放入資料"></a>放入資料</h3><p>接著在 <code>apikeys.properties</code> 放入機密資料</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">keyAlias = KEY</span><br><span class="line">keyPassword = 12345678</span><br><span class="line">storePassword = 12345678</span><br><span class="line">storeFile = F:\\Key</span><br></pre></td></tr></table></figure>
+<p>這裡的概念是 Map，因此 Key 的部分就自己命名。</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>接著取代本來的 Gradle 裡放置帳密的地方。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.jetbrains.kotlin.konan.properties.Properties</span><br><span class="line"></span><br><span class="line">.......</span><br><span class="line"></span><br><span class="line">android&#123;</span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        getByName(<span class="string">&quot;debug&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">val</span> keyStoreFile = project.rootProject.file(<span class="string">&quot;apikeys.properties&quot;</span>)</span><br><span class="line">            <span class="keyword">val</span> properties = Properties().apply &#123;</span><br><span class="line">                load(keyStoreFile.inputStream())</span><br><span class="line">            &#125;</span><br><span class="line">            keyAlias = properties.getProperty(<span class="string">&quot;keyAlias&quot;</span>)</span><br><span class="line">            keyPassword = properties.getProperty(<span class="string">&quot;keyPassword&quot;</span>)</span><br><span class="line">            storePassword = properties.getProperty(<span class="string">&quot;storePassword&quot;</span>)</span><br><span class="line">            storeFile = file(properties.getProperty(<span class="string">&quot;storeFile&quot;</span>))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="排除上傳"><a href="#排除上傳" class="headerlink" title="排除上傳"></a>排除上傳</h3><p>記得要排除 <code>apikeys.properties</code> 於同步之外。也就是要加入 <code>.gitignore</code>。</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>用這個方法，防止上傳機密資料。如果同事需要用的話，我想就額外再傳遞機密的檔案即可。至少不要上傳至別人的伺服器裡吧！</p>
+]]></content>
+      <categories>
+        <category>Academic</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>GitHub</tag>
+        <tag>Gradle</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>把 OpenCv 匯入至 Android 專案的過程與使用事項</title>
     <url>/20240711/209776317/</url>
     <content><![CDATA[<p>目前考慮要在 Android 專案匯入 OpenCv，所以這篇文章在記錄這個過程。</p>
@@ -221,30 +248,34 @@
       </tags>
   </entry>
   <entry>
-    <title>真的需要在 Gradle 裡引用機密資料但是不想上傳至 GitHub 怎麼辦？</title>
-    <url>/20240711/1438358789/</url>
-    <content><![CDATA[<p>真的需要在 Gradle 裡引用機密資料但是不想上傳至 GitHub 怎麼辦？就不想把機密資料放上 GitHub！</p>
+    <title>ExceptionInInitializerError 之怪事件</title>
+    <url>/20240717/105329673/</url>
+    <content><![CDATA[<p>第一次看過 <code>ExceptionInInitializerError</code>，好好的記錄下來。</p>
 <span id="more"></span>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>生成的 APK 都是有上鑰匙加密的，但是希望平常用 Debug 版本時，可以直接無縫安裝，不需要移除再安裝，因此我會選擇把金鑰的訊息直接放在 Gradle 裡面。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        getByName(<span class="string">&quot;debug&quot;</span>) &#123;</span><br><span class="line">            keyAlias = <span class="string">&quot;KEY&quot;</span></span><br><span class="line">            keyPassword = <span class="string">&quot;12345678&quot;</span></span><br><span class="line">            storePassword = <span class="string">&quot;12345678&quot;</span></span><br><span class="line">            storeFile = file(<span class="string">&quot;F:\\Key&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但是這種東西直接上傳到 GitHub 實在是太不安全了！如果流出去了，那麼別人就可以用這把金鑰上傳簽署過的 APK 至 PlayStore 上面。</p>
-<h2 id="作法"><a href="#作法" class="headerlink" title="作法"></a>作法</h2><p>因此，我們希望額外創造一個檔案，放入機密資料後再額外從原本的檔案中引用，並且把額外的檔案加入 .gitignore 裡，防止機密檔案被 git 上去。</p>
-<h3 id="準備"><a href="#準備" class="headerlink" title="準備"></a>準備</h3><p>我是新創 <code>apikeys.properties</code> 於同份專案裡，我是放在跟 <code>.gitignore</code> 同個層級</p>
-<h3 id="放入資料"><a href="#放入資料" class="headerlink" title="放入資料"></a>放入資料</h3><p>接著在 <code>apikeys.properties</code> 放入機密資料</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">keyAlias = KEY</span><br><span class="line">keyPassword = 12345678</span><br><span class="line">storePassword = 12345678</span><br><span class="line">storeFile = F:\\Key</span><br></pre></td></tr></table></figure>
-<p>這裡的概念是 Map，因此 Key 的部分就自己命名。</p>
-<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>接著取代本來的 Gradle 裡放置帳密的地方。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.jetbrains.kotlin.konan.properties.Properties</span><br><span class="line"></span><br><span class="line">.......</span><br><span class="line"></span><br><span class="line">android&#123;</span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        getByName(<span class="string">&quot;debug&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">val</span> keyStoreFile = project.rootProject.file(<span class="string">&quot;apikeys.properties&quot;</span>)</span><br><span class="line">            <span class="keyword">val</span> properties = Properties().apply &#123;</span><br><span class="line">                load(keyStoreFile.inputStream())</span><br><span class="line">            &#125;</span><br><span class="line">            keyAlias = properties.getProperty(<span class="string">&quot;keyAlias&quot;</span>)</span><br><span class="line">            keyPassword = properties.getProperty(<span class="string">&quot;keyPassword&quot;</span>)</span><br><span class="line">            storePassword = properties.getProperty(<span class="string">&quot;storePassword&quot;</span>)</span><br><span class="line">            storeFile = file(properties.getProperty(<span class="string">&quot;storeFile&quot;</span>))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="排除上傳"><a href="#排除上傳" class="headerlink" title="排除上傳"></a>排除上傳</h3><p>記得要排除 <code>apikeys.properties</code> 於同步之外。也就是要加入 <code>.gitignore</code>。</p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>用這個方法，防止上傳機密資料。如果同事需要用的話，我想就額外再傳遞機密的檔案即可。至少不要上傳至別人的伺服器裡吧！</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因為原本公司的 APP 有太多的缺陷，例如太多的靜態變數，導致結束 APP 後常常沒有好好的釋放，因此現在就需要補上許多措施，例如在 onDestroy() 階段手動釋放這些靜態變數。</p>
+<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><p>此 APP 有個類別 <code>BBB</code>，裡面放了一堆靜態的 view，因此我打算去釋放他們，因此我在 <code>BBB</code> 裡面創一個靜態的函式 <code>clear()</code> 函式去釋放他們。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">clear</span><span class="params">()</span>&#123;</span><br><span class="line">    LockCheckBox = <span class="literal">null</span>;</span><br><span class="line">    connectCheckBox = <span class="literal">null</span>;</span><br><span class="line">    deviceName = <span class="literal">null</span>;</span><br><span class="line">    serviceMessenger = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>當下測試完後發現有釋放成功，所以就去搞別項。結果別項在測試時，就看到了此錯誤：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FATAL EXCEPTION: Timer-6 (Ask Gemini)</span><br><span class="line">Process: com.XXXXX.OOOOOO, PID: 3391</span><br><span class="line">java.lang.ExceptionInInitializerError</span><br><span class="line">    at XXXXX.com.mainpage.ZZZZZZZZ.destroyAsDepart(ZZZZZZZZ.java:874)</span><br><span class="line">    at XXXXX.com.mainpage.ZZZZZZZZ.-$$Nest$mdestroyAsDepart(Unknown Source:0)</span><br><span class="line">    at XXXXX.com.mainpage.ZZZZZZZZ$3.run(ZZZZZZZZ.java:841)</span><br><span class="line">    at java.util.TimerThread.mainLoop(Timer.java:563)</span><br><span class="line">    at java.util.TimerThread.run(Timer.java:513)</span><br><span class="line">Caused by: java.lang.RuntimeException: Can&#x27;t create handler inside thread Thread[Timer-6,5,main] that has not called Looper.prepare()</span><br><span class="line">    at android.os.Handler.&lt;init&gt;(Handler.java:227)</span><br><span class="line">    at android.os.Handler.&lt;init&gt;(Handler.java:129)</span><br><span class="line">    at XXXXX.pub.BBB$1.&lt;init&gt;(BBB.java:176)</span><br><span class="line">    at XXXXX.pub.BBB.&lt;clinit&gt;(BBB.java:176)</span><br><span class="line">    at XXXXX.com.mainpage.ZZZZZZZZ.destroyAsDepart(ZZZZZZZZ.java:874) </span><br><span class="line">    at XXXXX.com.mainpage.ZZZZZZZZ.-$$Nest$mdestroyAsDepart(Unknown Source:0) </span><br><span class="line">    at XXXXX.com.mainpage.ZZZZZZZZ$3.run(ZZZZZZZZ.java:841) </span><br><span class="line">    at java.util.TimerThread.mainLoop(Timer.java:563) </span><br><span class="line">    at java.util.TimerThread.run(Timer.java:513) </span><br></pre></td></tr></table></figure>
+<p>我就覺得非常奇怪，為什麼會出現此錯誤？而且測試當下沒錯，測試別項後就出錯，但是因為是錯在結束程式後，因此也不確定會造成什麼巨大的影響。</p>
+<p>然後反覆測試後，發現：當有執行過 <code>BBB</code> 後，就不會出現此錯誤；如果沒有執行過，那麼就會出現此錯誤。</p>
+<p>我後來查到了 <a href="https://blog.csdn.net/xie_xiansheng/article/details/50831623">https://blog.csdn.net/xie_xiansheng/article/details/50831623</a>，裡面有提到：</p>
+<ol>
+<li>靜態類別也有載入順序問題：以本次為例，可能是因為已進入 onDestroy 階段，又再進入 <code>clear()</code>，因此開始初始化 <code>BBB</code>，結果錯亂之下，裡面的 Handler 物件就出錯。</li>
+<li>主要造成的錯誤應該是 <code>RuntimeException</code>，但因為跟靜態類別的初始化有關，因此最後拋出的是 <code>ExceptionInInitializerError</code>。</li>
+</ol>
+<p>我考慮過後，覺得既然這個錯誤只會發生在程式結束時，因此應當是不用處理 <code>BBB</code> 是否還是要先初始化的問題，因此我就用 try-catch 解決。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    BBB.clear();</span><br><span class="line">&#125; <span class="keyword">catch</span> (ExceptionInInitializerError ignore) &#123;</span><br><span class="line">    <span class="comment">// 在還沒執行到 BBB 時，不會載入任何 BBB 的靜態部分。因此沒進入該類別後退出 APP</span></span><br><span class="line">    <span class="comment">// 時，會跑出 RuntimeException，最後成為 ExceptionInInitializerError。</span></span><br><span class="line">    <span class="comment">// ignore.printStackTrace();</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>這份程式碼原本的人就是把所有的變數與函式都用成靜態，不管有沒有需要公開，一律設置成 <code>public static</code>，所以導致大部分的程式碼引用都是建立在 <code>static</code> 隨處可引用的概念，因此結束時就需要多花心力去釋放這些資源。</p>
 ]]></content>
       <categories>
         <category>Academic</category>
       </categories>
       <tags>
         <tag>Android</tag>
-        <tag>GitHub</tag>
-        <tag>Gradle</tag>
+        <tag>Exception</tag>
+        <tag>ExceptionInInitializerError</tag>
+        <tag>Static</tag>
       </tags>
   </entry>
   <entry>
