@@ -146,13 +146,6 @@
 
   
   <url>
-    <loc>https://spencer830612.github.io/tags/Diary/</loc>
-    <lastmod>2024-07-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://spencer830612.github.io/tags/ppocrlabel/</loc>
     <lastmod>2024-07-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -174,7 +167,42 @@
   </url>
   
   <url>
+    <loc>https://spencer830612.github.io/tags/Diary/</loc>
+    <lastmod>2024-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://spencer830612.github.io/tags/Image-recognize/</loc>
+    <lastmod>2024-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://spencer830612.github.io/tags/Python/</loc>
+    <lastmod>2024-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://spencer830612.github.io/tags/Android/</loc>
+    <lastmod>2024-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://spencer830612.github.io/tags/Chaquopy/</loc>
+    <lastmod>2024-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://spencer830612.github.io/tags/OpenCv/</loc>
     <lastmod>2024-07-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -189,34 +217,6 @@
   
   <url>
     <loc>https://spencer830612.github.io/tags/Gradle/</loc>
-    <lastmod>2024-07-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://spencer830612.github.io/tags/Android/</loc>
-    <lastmod>2024-07-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://spencer830612.github.io/tags/OpenCv/</loc>
-    <lastmod>2024-07-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://spencer830612.github.io/tags/Python/</loc>
-    <lastmod>2024-07-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://spencer830612.github.io/tags/Chaquopy/</loc>
     <lastmod>2024-07-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -244,20 +244,6 @@
   </url>
   
   <url>
-    <loc>https://spencer830612.github.io/tags/WakeLock/</loc>
-    <lastmod>2024-07-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://spencer830612.github.io/tags/No-Exception/</loc>
-    <lastmod>2024-07-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://spencer830612.github.io/tags/Keras/</loc>
     <lastmod>2024-07-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -273,6 +259,20 @@
   
   <url>
     <loc>https://spencer830612.github.io/tags/Android-Studio-Koala/</loc>
+    <lastmod>2024-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://spencer830612.github.io/tags/WakeLock/</loc>
+    <lastmod>2024-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://spencer830612.github.io/tags/No-Exception/</loc>
     <lastmod>2024-07-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -302,14 +302,14 @@
 
   
   <url>
-    <loc>https://spencer830612.github.io/categories/Diary/</loc>
+    <loc>https://spencer830612.github.io/categories/Academic/</loc>
     <lastmod>2024-07-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://spencer830612.github.io/categories/Academic/</loc>
+    <loc>https://spencer830612.github.io/categories/Diary/</loc>
     <lastmod>2024-07-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
