@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>今日工作心得</title>
+    <url>/20240626/1620941357/</url>
+    <content><![CDATA[<p>我真的覺得濫用靜態變數真的會造成偵錯的災難……當然，我負責的 App 習慣只用一個 activity 就負責所有頁面的內容，但是因為不同人接手，再加上沒有交接習慣的緣故，因此容易有重工的情形。</p>
+<p>全部是靜態變數（static variable），因此我非常難知道這個變數是為何而變，我必須要在可能的入口全部埋一次偵錯日誌，再透過二分法慢慢篩出真正的入口。</p>
+<p>我希望自己做程式時可以辦到：</p>
+<ul>
+<li><p>不濫用靜態變數：靜態變數只用在常數。在設計時，就要先考慮好這些需要傳遞變數的情形，不要用靜態變數迴避此問題。</p>
+</li>
+<li><p>不要為了省變數個數而重複使用：原先的 App 會為了達到此目的，把不同意義的內容用同個變數去承載；再加上靜態變數的濫用問題，導致寫程式與維護上更令人崩潰。</p>
+</li>
+</ul>
+<p>我最近加入了程人頻道，發現裡面有前人整理的面試秘笈，希望我能有效吸收、找到更好的工作！</p>
+]]></content>
+      <categories>
+        <category>Diary</category>
+      </categories>
+      <tags>
+        <tag>Diary</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>想利用 ppocrlabel 做圖像訓練的前置步驟</title>
     <url>/20240626/1718242579/</url>
     <content><![CDATA[<p>原本公司想要用影像去辨識七段顯示器，剛好網路上看到有可以用的<a href="https://github.com/renjithsasidharan/seven-segment-ocr">連結</a>，於是開始了前途多舛的時間，結果終於好了。不過很多步驟我來不及記起來，但至少這些注意事項已經夠多了！<br><span id="more"></span></p>
@@ -34,27 +55,6 @@
         <tag>ppocrlabel</tag>
         <tag>paddlepaddle</tag>
         <tag>TensorFlowLite</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>今日工作心得</title>
-    <url>/20240626/1620941357/</url>
-    <content><![CDATA[<p>我真的覺得濫用靜態變數真的會造成偵錯的災難……當然，我負責的 App 習慣只用一個 activity 就負責所有頁面的內容，但是因為不同人接手，再加上沒有交接習慣的緣故，因此容易有重工的情形。</p>
-<p>全部是靜態變數（static variable），因此我非常難知道這個變數是為何而變，我必須要在可能的入口全部埋一次偵錯日誌，再透過二分法慢慢篩出真正的入口。</p>
-<p>我希望自己做程式時可以辦到：</p>
-<ul>
-<li><p>不濫用靜態變數：靜態變數只用在常數。在設計時，就要先考慮好這些需要傳遞變數的情形，不要用靜態變數迴避此問題。</p>
-</li>
-<li><p>不要為了省變數個數而重複使用：原先的 App 會為了達到此目的，把不同意義的內容用同個變數去承載；再加上靜態變數的濫用問題，導致寫程式與維護上更令人崩潰。</p>
-</li>
-</ul>
-<p>我最近加入了程人頻道，發現裡面有前人整理的面試秘笈，希望我能有效吸收、找到更好的工作！</p>
-]]></content>
-      <categories>
-        <category>Diary</category>
-      </categories>
-      <tags>
-        <tag>Diary</tag>
       </tags>
   </entry>
   <entry>
@@ -103,6 +103,81 @@
       <tags>
         <tag>Diary</tag>
         <tag>Image recognize</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>真的需要在 Gradle 裡引用機密資料但是不想上傳至 GitHub 怎麼辦？</title>
+    <url>/20240711/1438358789/</url>
+    <content><![CDATA[<p>真的需要在 Gradle 裡引用機密資料但是不想上傳至 GitHub 怎麼辦？就不想把機密資料放上 GitHub！</p>
+<span id="more"></span>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>生成的 APK 都是有上鑰匙加密的，但是希望平常用 Debug 版本時，可以直接無縫安裝，不需要移除再安裝，因此我會選擇把金鑰的訊息直接放在 Gradle 裡面。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        getByName(<span class="string">&quot;debug&quot;</span>) &#123;</span><br><span class="line">            keyAlias = <span class="string">&quot;KEY&quot;</span></span><br><span class="line">            keyPassword = <span class="string">&quot;12345678&quot;</span></span><br><span class="line">            storePassword = <span class="string">&quot;12345678&quot;</span></span><br><span class="line">            storeFile = file(<span class="string">&quot;F:\\Key&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是這種東西直接上傳到 GitHub 實在是太不安全了！如果流出去了，那麼別人就可以用這把金鑰上傳簽署過的 APK 至 PlayStore 上面。</p>
+<h2 id="作法"><a href="#作法" class="headerlink" title="作法"></a>作法</h2><p>因此，我們希望額外創造一個檔案，放入機密資料後再額外從原本的檔案中引用，並且把額外的檔案加入 .gitignore 裡，防止機密檔案被 git 上去。</p>
+<h3 id="準備"><a href="#準備" class="headerlink" title="準備"></a>準備</h3><p>我是新創 <code>apikeys.properties</code> 於同份專案裡，我是放在跟 <code>.gitignore</code> 同個層級</p>
+<h3 id="放入資料"><a href="#放入資料" class="headerlink" title="放入資料"></a>放入資料</h3><p>接著在 <code>apikeys.properties</code> 放入機密資料</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">keyAlias = KEY</span><br><span class="line">keyPassword = 12345678</span><br><span class="line">storePassword = 12345678</span><br><span class="line">storeFile = F:\\Key</span><br></pre></td></tr></table></figure>
+<p>這裡的概念是 Map，因此 Key 的部分就自己命名。</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>接著取代本來的 Gradle 裡放置帳密的地方。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.jetbrains.kotlin.konan.properties.Properties</span><br><span class="line"></span><br><span class="line">.......</span><br><span class="line"></span><br><span class="line">android&#123;</span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        getByName(<span class="string">&quot;debug&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">val</span> keyStoreFile = project.rootProject.file(<span class="string">&quot;apikeys.properties&quot;</span>)</span><br><span class="line">            <span class="keyword">val</span> properties = Properties().apply &#123;</span><br><span class="line">                load(keyStoreFile.inputStream())</span><br><span class="line">            &#125;</span><br><span class="line">            keyAlias = properties.getProperty(<span class="string">&quot;keyAlias&quot;</span>)</span><br><span class="line">            keyPassword = properties.getProperty(<span class="string">&quot;keyPassword&quot;</span>)</span><br><span class="line">            storePassword = properties.getProperty(<span class="string">&quot;storePassword&quot;</span>)</span><br><span class="line">            storeFile = file(properties.getProperty(<span class="string">&quot;storeFile&quot;</span>))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="排除上傳"><a href="#排除上傳" class="headerlink" title="排除上傳"></a>排除上傳</h3><p>記得要排除 <code>apikeys.properties</code> 於同步之外。也就是要加入 <code>.gitignore</code>。</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>用這個方法，防止上傳機密資料。如果同事需要用的話，我想就額外再傳遞機密的檔案即可。至少不要上傳至別人的伺服器裡吧！</p>
+]]></content>
+      <categories>
+        <category>Academic</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
+        <tag>Gradle</tag>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>把 OpenCv 匯入至 Android 專案的過程與使用事項</title>
+    <url>/20240711/209776317/</url>
+    <content><![CDATA[<p>目前考慮要在 Android 專案匯入 OpenCv，所以這篇文章在記錄這個過程。</p>
+<span id="more"></span>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目前是想要做在 Android 手機上的影像辨識。前面的文章有提出幾條路，後來我發現：在 Python 上執行的程式碼其實都是 OpenCv on Pytohn 的。接著我又發現 OpenCv 上其實有 OpenCv4Android 的專案，那代表：我其實把一樣的過程模仿至 Android 上，就不用處理在 Android 上執行 Python 的效能問題了！</p>
+<h2 id="作法"><a href="#作法" class="headerlink" title="作法"></a>作法</h2><h3 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h3><ul>
+<li>Android Studio Koala</li>
+<li>build.gradle in Kotlin</li>
+<li>OpenCV 4.10</li>
+</ul>
+<h3 id="下載"><a href="#下載" class="headerlink" title="下載"></a>下載</h3><p>首先去 OpenCv 的 <a href="https://github.com/opencv/opencv/releases">GitHub 頁面</a> 去下載他的 SDK。<br><img src="https://i.imgur.com/w9R8VhG.png" alt="Image"><br>當然你也可以依據需求下載別的版本。</p>
+<h3 id="解壓縮與探勘"><a href="#解壓縮與探勘" class="headerlink" title="解壓縮與探勘"></a>解壓縮與探勘</h3><p>解壓縮後會看到兩個資料夾名為 <code>sdk</code> 與 <code>samples</code>，內容與下圖對應於左邊與右邊。左邊是他的原始檔案，後續會教如何匯入；右邊是他的示範專案，可以看看他是如何應用在 Android Project 裡面。</p>
+<p><img src="https://i.imgur.com/XpML3ZQ.png" alt="Image"></p>
+<p>這是我少數一開啟就能執行的示範專案，也覺得他裡面管理 flavors 的 gradle 寫得很詳細，也是一個學習的好專案。</p>
+<h3 id="把-SDK-匯入至現有專案"><a href="#把-SDK-匯入至現有專案" class="headerlink" title="把 SDK 匯入至現有專案"></a>把 SDK 匯入至現有專案</h3><ol>
+<li><p>匯入 SDK<br><img src="https://i.imgur.com/syCkIjE.png" alt="Image"></p>
+</li>
+<li><p>找到你剛剛下載的地方，選取 sdk<br><img src="https://i.imgur.com/3aCqSSj.png" alt="Image"></p>
+</li>
+<li><p>選好後，要為這個 SDK 命名。因為我已經先匯入了，他會提醒我名字重複；<br><img src="https://i.imgur.com/YL1l0WN.png" alt="Image"></p>
+</li>
+<li><p>按下 Finish</p>
+</li>
+</ol>
+<h3 id="調整匯入的-SDK-的-Gradle"><a href="#調整匯入的-SDK-的-Gradle" class="headerlink" title="調整匯入的 SDK 的 Gradle"></a>調整匯入的 SDK 的 Gradle</h3><p>點進去匯入的 SDK 的 Gradle。這裡是命名成 OpenCV，Android Studio 也會提醒你。<br><img src="https://i.imgur.com/YZoggMy.png" alt="Image"></p>
+<p>裡面有幾個需要更改的地方：<br><img src="https://i.imgur.com/8WLNtuR.png" alt="Image"></p>
+<ol>
+<li>註解掉 <code>apply plugin: &#39;kotlin-android&#39;</code></li>
+<li>註解掉 <code>targetSdkVersion 33</code></li>
+<li><code>compileSdk</code> 與 <code>minSdkVersion</code> 我是直接對齊我原本專案的版本</li>
+<li>我也有對齊 <code>compileOptions</code> 的 <code>JavaVersion</code></li>
+</ol>
+<h3 id="調整原本的-Gradle"><a href="#調整原本的-Gradle" class="headerlink" title="調整原本的 Gradle"></a>調整原本的 Gradle</h3><p>在 dependencies 區塊匯入 OpenCV 的 SDK</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    implementation (project(<span class="string">&quot;:OpenCV&quot;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="編譯與執行測試"><a href="#編譯與執行測試" class="headerlink" title="編譯與執行測試"></a>編譯與執行測試</h3><p>在使用 OpenCV 的功能前，一定要先初始化：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (OpenCVLoader.initLocal()) &#123;</span><br><span class="line">    Log.i(<span class="string">&quot;TAG&quot;</span>, <span class="string">&quot;OpenCV loaded successfully&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    Log.e(<span class="string">&quot;TAG&quot;</span>, <span class="string">&quot;OpenCV initialization failed!&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再經過一分多鐘的編譯，成功！</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>OpenCV 的匯入感覺是已經算比較容易的。如果你打包 APK 時想縮減一些容量，可以看看要不要去除 javadoc 與 licenses 的內容。前者是說明文件，後者是引用開源套件的文件說明。</p>
+]]></content>
+      <categories>
+        <category>Academic</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>OpenCv</tag>
       </tags>
   </entry>
   <entry>
@@ -167,84 +242,9 @@
         <category>Academic</category>
       </categories>
       <tags>
+        <tag>Android</tag>
         <tag>Python</tag>
-        <tag>Android</tag>
         <tag>Chaquopy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>真的需要在 Gradle 裡引用機密資料但是不想上傳至 GitHub 怎麼辦？</title>
-    <url>/20240711/1438358789/</url>
-    <content><![CDATA[<p>真的需要在 Gradle 裡引用機密資料但是不想上傳至 GitHub 怎麼辦？就不想把機密資料放上 GitHub！</p>
-<span id="more"></span>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>生成的 APK 都是有上鑰匙加密的，但是希望平常用 Debug 版本時，可以直接無縫安裝，不需要移除再安裝，因此我會選擇把金鑰的訊息直接放在 Gradle 裡面。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        getByName(<span class="string">&quot;debug&quot;</span>) &#123;</span><br><span class="line">            keyAlias = <span class="string">&quot;KEY&quot;</span></span><br><span class="line">            keyPassword = <span class="string">&quot;12345678&quot;</span></span><br><span class="line">            storePassword = <span class="string">&quot;12345678&quot;</span></span><br><span class="line">            storeFile = file(<span class="string">&quot;F:\\Key&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但是這種東西直接上傳到 GitHub 實在是太不安全了！如果流出去了，那麼別人就可以用這把金鑰上傳簽署過的 APK 至 PlayStore 上面。</p>
-<h2 id="作法"><a href="#作法" class="headerlink" title="作法"></a>作法</h2><p>因此，我們希望額外創造一個檔案，放入機密資料後再額外從原本的檔案中引用，並且把額外的檔案加入 .gitignore 裡，防止機密檔案被 git 上去。</p>
-<h3 id="準備"><a href="#準備" class="headerlink" title="準備"></a>準備</h3><p>我是新創 <code>apikeys.properties</code> 於同份專案裡，我是放在跟 <code>.gitignore</code> 同個層級</p>
-<h3 id="放入資料"><a href="#放入資料" class="headerlink" title="放入資料"></a>放入資料</h3><p>接著在 <code>apikeys.properties</code> 放入機密資料</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">keyAlias = KEY</span><br><span class="line">keyPassword = 12345678</span><br><span class="line">storePassword = 12345678</span><br><span class="line">storeFile = F:\\Key</span><br></pre></td></tr></table></figure>
-<p>這裡的概念是 Map，因此 Key 的部分就自己命名。</p>
-<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>接著取代本來的 Gradle 裡放置帳密的地方。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.jetbrains.kotlin.konan.properties.Properties</span><br><span class="line"></span><br><span class="line">.......</span><br><span class="line"></span><br><span class="line">android&#123;</span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        getByName(<span class="string">&quot;debug&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">val</span> keyStoreFile = project.rootProject.file(<span class="string">&quot;apikeys.properties&quot;</span>)</span><br><span class="line">            <span class="keyword">val</span> properties = Properties().apply &#123;</span><br><span class="line">                load(keyStoreFile.inputStream())</span><br><span class="line">            &#125;</span><br><span class="line">            keyAlias = properties.getProperty(<span class="string">&quot;keyAlias&quot;</span>)</span><br><span class="line">            keyPassword = properties.getProperty(<span class="string">&quot;keyPassword&quot;</span>)</span><br><span class="line">            storePassword = properties.getProperty(<span class="string">&quot;storePassword&quot;</span>)</span><br><span class="line">            storeFile = file(properties.getProperty(<span class="string">&quot;storeFile&quot;</span>))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="排除上傳"><a href="#排除上傳" class="headerlink" title="排除上傳"></a>排除上傳</h3><p>記得要排除 <code>apikeys.properties</code> 於同步之外。也就是要加入 <code>.gitignore</code>。</p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>用這個方法，防止上傳機密資料。如果同事需要用的話，我想就額外再傳遞機密的檔案即可。至少不要上傳至別人的伺服器裡吧！</p>
-]]></content>
-      <categories>
-        <category>Academic</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-        <tag>GitHub</tag>
-        <tag>Gradle</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>把 OpenCv 匯入至 Android 專案的過程與使用事項</title>
-    <url>/20240711/209776317/</url>
-    <content><![CDATA[<p>目前考慮要在 Android 專案匯入 OpenCv，所以這篇文章在記錄這個過程。</p>
-<span id="more"></span>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目前是想要做在 Android 手機上的影像辨識。前面的文章有提出幾條路，後來我發現：在 Python 上執行的程式碼其實都是 OpenCv on Pytohn 的。接著我又發現 OpenCv 上其實有 OpenCv4Android 的專案，那代表：我其實把一樣的過程模仿至 Android 上，就不用處理在 Android 上執行 Python 的效能問題了！</p>
-<h2 id="作法"><a href="#作法" class="headerlink" title="作法"></a>作法</h2><h3 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h3><ul>
-<li>Android Studio Koala</li>
-<li>build.gradle in Kotlin</li>
-<li>OpenCV 4.10</li>
-</ul>
-<h3 id="下載"><a href="#下載" class="headerlink" title="下載"></a>下載</h3><p>首先去 OpenCv 的 <a href="https://github.com/opencv/opencv/releases">GitHub 頁面</a> 去下載他的 SDK。<br><img src="https://i.imgur.com/w9R8VhG.png" alt="Image"><br>當然你也可以依據需求下載別的版本。</p>
-<h3 id="解壓縮與探勘"><a href="#解壓縮與探勘" class="headerlink" title="解壓縮與探勘"></a>解壓縮與探勘</h3><p>解壓縮後會看到兩個資料夾名為 <code>sdk</code> 與 <code>samples</code>，內容與下圖對應於左邊與右邊。左邊是他的原始檔案，後續會教如何匯入；右邊是他的示範專案，可以看看他是如何應用在 Android Project 裡面。</p>
-<p><img src="https://i.imgur.com/XpML3ZQ.png" alt="Image"></p>
-<p>這是我少數一開啟就能執行的示範專案，也覺得他裡面管理 flavors 的 gradle 寫得很詳細，也是一個學習的好專案。</p>
-<h3 id="把-SDK-匯入至現有專案"><a href="#把-SDK-匯入至現有專案" class="headerlink" title="把 SDK 匯入至現有專案"></a>把 SDK 匯入至現有專案</h3><ol>
-<li><p>匯入 SDK<br><img src="https://i.imgur.com/syCkIjE.png" alt="Image"></p>
-</li>
-<li><p>找到你剛剛下載的地方，選取 sdk<br><img src="https://i.imgur.com/3aCqSSj.png" alt="Image"></p>
-</li>
-<li><p>選好後，要為這個 SDK 命名。因為我已經先匯入了，他會提醒我名字重複；<br><img src="https://i.imgur.com/YL1l0WN.png" alt="Image"></p>
-</li>
-<li><p>按下 Finish</p>
-</li>
-</ol>
-<h3 id="調整匯入的-SDK-的-Gradle"><a href="#調整匯入的-SDK-的-Gradle" class="headerlink" title="調整匯入的 SDK 的 Gradle"></a>調整匯入的 SDK 的 Gradle</h3><p>點進去匯入的 SDK 的 Gradle。這裡是命名成 OpenCV，Android Studio 也會提醒你。<br><img src="https://i.imgur.com/YZoggMy.png" alt="Image"></p>
-<p>裡面有幾個需要更改的地方：<br><img src="https://i.imgur.com/8WLNtuR.png" alt="Image"></p>
-<ol>
-<li>註解掉 <code>apply plugin: &#39;kotlin-android&#39;</code></li>
-<li>註解掉 <code>targetSdkVersion 33</code></li>
-<li><code>compileSdk</code> 與 <code>minSdkVersion</code> 我是直接對齊我原本專案的版本</li>
-<li>我也有對齊 <code>compileOptions</code> 的 <code>JavaVersion</code></li>
-</ol>
-<h3 id="調整原本的-Gradle"><a href="#調整原本的-Gradle" class="headerlink" title="調整原本的 Gradle"></a>調整原本的 Gradle</h3><p>在 dependencies 區塊匯入 OpenCV 的 SDK</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    implementation (project(<span class="string">&quot;:OpenCV&quot;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="編譯與執行測試"><a href="#編譯與執行測試" class="headerlink" title="編譯與執行測試"></a>編譯與執行測試</h3><p>在使用 OpenCV 的功能前，一定要先初始化：</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (OpenCVLoader.initLocal()) &#123;</span><br><span class="line">    Log.i(<span class="string">&quot;TAG&quot;</span>, <span class="string">&quot;OpenCV loaded successfully&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    Log.e(<span class="string">&quot;TAG&quot;</span>, <span class="string">&quot;OpenCV initialization failed!&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>再經過一分多鐘的編譯，成功！</p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>OpenCV 的匯入感覺是已經算比較容易的。如果你打包 APK 時想縮減一些容量，可以看看要不要去除 javadoc 與 licenses 的內容。前者是說明文件，後者是引用開源套件的文件說明。</p>
-]]></content>
-      <categories>
-        <category>Academic</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-        <tag>OpenCv</tag>
       </tags>
   </entry>
   <entry>
@@ -279,35 +279,67 @@
       </tags>
   </entry>
   <entry>
-    <title>有可能利用 MATLAB 生成 C++ 程式碼給 Android 用嗎？</title>
-    <url>/20240704/2876724007/</url>
-    <content><![CDATA[<p>關於對 MATLAB 不太熟，以及對 MATLAB 這條路感到幻滅的嘗試過程。</p>
+    <title>沒有崩潰記錄，可是 APP 還是被終止</title>
+    <url>/20240718/733064438/</url>
+    <content><![CDATA[<p>沒有輸出錯誤訊息，也看不到崩潰記錄，阿我是要怎麼辦？</p>
 <span id="more"></span>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面有在研究 Python 做影像前置處理的部分。但我突然想到：MATLAB 似乎有把程式碼轉成 C++ 的功能，那我是否可以先用 MATLAB 的 ImageProcess Tool 先自己進行一遍提取所需區域的內容，再把他生成的程式碼轉換成 C++ 丟到 Android 上執行，可以這樣嗎？</p>
-<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><p>因為 Android Studio 其實有開發 NDK 的功能，也就是可以在上面執行 C 或 C++ 語言的功能，因此我才會考慮用這種方式轉換 MATLAB 的程式碼。一方面是 Android 上不太可能能跑 Matlab 的程式碼，另一方面是我認為 C++ 語言執行的效率夠快，或許更適合處理影像的場景</p>
-<h2 id="嘗試過程"><a href="#嘗試過程" class="headerlink" title="嘗試過程"></a>嘗試過程</h2><p>其實也蠻順利的，因為你在學生時代申請的學術帳號還可以繼續用，我就可以再下載到公司的電腦用，等到不用時再記得移除即可。</p>
-<p>不過在嘗試輸出時就發現問題了！</p>
-<h3 id="什麼是-Entry-Point-Functions？"><a href="#什麼是-Entry-Point-Functions？" class="headerlink" title="什麼是 Entry-Point Functions？"></a>什麼是 Entry-Point Functions？</h3><p>首先我上次寫 C 語言已經是八年前的事情，我剩下的印象就是「恐怖」、「指標很可怕」。不過 MATLAB 的好處，就是有提供詳細的說明，大家可以去看看。</p>
-<p>連結：<a href="https://www.mathworks.com/help/rtw/ug/configure-c-code-generation-for-model-entry-point-functions.html">https://www.mathworks.com/help/rtw/ug/configure-c-code-generation-for-model-entry-point-functions.html</a></p>
-<h3 id="決定輸入參數的資料型態"><a href="#決定輸入參數的資料型態" class="headerlink" title="決定輸入參數的資料型態"></a>決定輸入參數的資料型態</h3><p>在 MATLAB 裡，這個函式吃進去的參數是 RGB 色版的陣列，所以應該是類似於 3 維陣列的 tensor 形式。但是呢……</p>
-<p><img src="https://i.imgur.com/YiZEdYw.png" alt="Image"><br><img src="https://i.imgur.com/QlVini6.png" alt="Image"></p>
-<p>他只有 Matrix 形式耶……那我就會被卡在這裡了。好就算我這裡先用成 2 維型式，但接下來還是有別的事情。</p>
-<h3 id="選擇編譯的-compiler"><a href="#選擇編譯的-compiler" class="headerlink" title="選擇編譯的 compiler"></a>選擇編譯的 compiler</h3><p>首先會要你選擇你是要在哪類裝置上進行</p>
-<p><img src="https://i.imgur.com/fjfQEWI.png" alt="Image"></p>
-<p>如果選擇 None 的話，接下來會繼續選裝置內容</p>
-<p><img src="https://i.imgur.com/Qdu45Qe.png" alt="Image"></p>
-<p>以及選擇你要的 Compiler，這可能問題相對沒那麼大。</p>
-<p><img src="https://i.imgur.com/XvjXhhu.png" alt="Image"></p>
-<p>這邊我根本不知道怎麼選，於是最後編譯時就過不去了。</p>
-<h3 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h3><p>這邊非常吃你對於硬體的理解。那我覺得麻煩的是：如果是跟硬體有關係，那麼我想放到手機上，手機我記得是 arm 吧？可是會不會不同手機會有不同的差異呢？會不會中國那邊習慣用的手機又是不一樣的？然後 ImageProcess Tool 又是 MATLAB 獨有的工具，如果程式碼裡有用到他的函式，那有可能會全部輸出讓我們用嗎？可惜後者無法驗證，因為光是前者就過不去了，唉唉。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目前 APP 發現會有閃退的情況，但是遇到很麻煩的事情：Crashlytics 無回報，也就是在回報區都看不到任何記錄，所以不知道錯誤的內容，因此我就去掉出手機本地的 dump 記錄檔。</p>
+<p>但是內容非常多，而且搜尋 APP 的名字也沒有看到被終止的字眼，因此一籌莫展。</p>
+<h2 id="進展"><a href="#進展" class="headerlink" title="進展"></a>進展</h2><p>因為真的快瘋掉，於是我就問 ChatGPT「有沒有可能 APP 沒有 crash，是因為系統的某些原因造成 APP 被結束，因此在 log 中找不到相關的 crash 記錄？」於是 GPT 回覆我：</p>
+<blockquote>
+<ol>
+<li><p>過熱（Thermal Shutdown）：</p>
+<ul>
+<li>系統會記錄溫度相關的信息，並可能顯示應用程式因過熱被強制終止。</li>
+<li>搜尋 thermal、overheat、temperature 等關鍵字。</li>
+</ul>
+</li>
+<li><p>內存不足（Out of Memory, OOM）：</p>
+<ul>
+<li>系統在內存不足時，會殺死低優先級的進程以釋放內存。可以檢查 ActivityManager 的記錄，特別是 ActivityManager: Killing 這類訊息。</li>
+<li>搜尋 low memory、ActivityManager: Killing 等關鍵字。</li>
+</ul>
+</li>
+<li><p>電池管理（Battery Management）：</p>
+<ul>
+<li>某些情況下，系統會因電池管理策略而終止應用程式。檢查電池管理相關的日誌。</li>
+<li>搜尋 battery、power、thermal 等關鍵字。</li>
+</ul>
+</li>
+<li><p>其他系統原因：</p>
+<ul>
+<li>應用程式被系統強制終止可能出現在其他情況下，如設備過載等。可以檢查系統資源的狀態。</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<p>死馬當活馬醫，於是我搜尋 <code>ActivityManager: Killing</code>，看到了：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">07-18 09:05:48.619  1000  1740  4365 I ActivityManager: Process com.OOO.XXX (pid 8631) has died: fg  TOP (1924,346)</span><br></pre></td></tr></table></figure>
+<p>於是 GPT 說：</p>
+<blockquote>
+<p>這條記錄表明應用程式進程 com.OOO.XXX 被系統終止，原因可能不是因為崩潰，而是由於其他系統級別的原因。從這條記錄看，它被標記為 fg TOP，表示它是前台的頂部應用程式，這通常不是由於內存不足引起的。</p>
+</blockquote>
+<p>接著我就上網搜尋 <code>has died: fg TOP</code>，看到一個很棒的<a href="https://blog.csdn.net/xiaoyantan/article/details/118489613">網站</a>，敘述 APP 可能會被哪些方式結束，而不太會有報錯通知。</p>
+<p>突然看見一個<a href="https://forum.cocos.org/t/topic/137554">搜尋結果</a>，裡面在詢問關於 WAKE_LOCK 權限導致 APP 常常在小米上被殺掉的問題。我就在我 APP 裡面搜尋。</p>
+<p>果不其然，裡面有些地方被放置了 WakeLock，並且如果開啟藍牙，那麼就永遠跑不到關閉 WakeLock 的程式碼。但以目前這個 APP 的使用情形，關閉螢幕時完全不需要做事，那自然也不需要 WakeLock 功能了。</p>
+<p>而且為了防止 APP 進入後台，我們在 <code>Activity.onCreated()</code> 就加上了</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>因此就不太需要用 WAKE_LOCK 了。</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>其實要用 APP 開發一個永不關機的門禁系統，以 Android 來說是不太可行的。超過一個禮拜就會容易當機，但至少 APP 裡面不需要做的是情就不要去做，至少在新開機後的幾天內不要崩潰。</p>
+<h2 id="資料列表"><a href="#資料列表" class="headerlink" title="資料列表"></a>資料列表</h2><ol>
+<li><a href="https://chatgpt.com/share/a8e98c7b-151a-4bcc-aadd-82fab2bb3795">https://chatgpt.com/share/a8e98c7b-151a-4bcc-aadd-82fab2bb37950</a></li>
+<li><a href="https://blog.csdn.net/xiaoyantan/article/details/118489613">https://blog.csdn.net/xiaoyantan/article/details/118489613</a></li>
+<li><a href=" https://forum.cocos.org/t/topic/137554">https://forum.cocos.org/t/topic/137554</a></li>
+<li><a href="https://stackoverflow.com/questions/3723634/how-do-i-prevent-an-android-device-from-going-to-sleep-programmatically">https://stackoverflow.com/questions/3723634/how-do-i-prevent-an-android-device-from-going-to-sleep-programmatically</a></li>
+</ol>
 ]]></content>
       <categories>
         <category>Academic</category>
       </categories>
       <tags>
-        <tag>Image process</tag>
-        <tag>NDK</tag>
-        <tag>MATLAB</tag>
+        <tag>Android</tag>
+        <tag>WakeLock</tag>
+        <tag>No Exception</tag>
       </tags>
   </entry>
   <entry>
@@ -347,6 +379,38 @@
         <tag>Keras</tag>
         <tag>Ocr</tag>
         <tag>Android Studio Koala</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>有可能利用 MATLAB 生成 C++ 程式碼給 Android 用嗎？</title>
+    <url>/20240704/2876724007/</url>
+    <content><![CDATA[<p>關於對 MATLAB 不太熟，以及對 MATLAB 這條路感到幻滅的嘗試過程。</p>
+<span id="more"></span>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面有在研究 Python 做影像前置處理的部分。但我突然想到：MATLAB 似乎有把程式碼轉成 C++ 的功能，那我是否可以先用 MATLAB 的 ImageProcess Tool 先自己進行一遍提取所需區域的內容，再把他生成的程式碼轉換成 C++ 丟到 Android 上執行，可以這樣嗎？</p>
+<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><p>因為 Android Studio 其實有開發 NDK 的功能，也就是可以在上面執行 C 或 C++ 語言的功能，因此我才會考慮用這種方式轉換 MATLAB 的程式碼。一方面是 Android 上不太可能能跑 Matlab 的程式碼，另一方面是我認為 C++ 語言執行的效率夠快，或許更適合處理影像的場景</p>
+<h2 id="嘗試過程"><a href="#嘗試過程" class="headerlink" title="嘗試過程"></a>嘗試過程</h2><p>其實也蠻順利的，因為你在學生時代申請的學術帳號還可以繼續用，我就可以再下載到公司的電腦用，等到不用時再記得移除即可。</p>
+<p>不過在嘗試輸出時就發現問題了！</p>
+<h3 id="什麼是-Entry-Point-Functions？"><a href="#什麼是-Entry-Point-Functions？" class="headerlink" title="什麼是 Entry-Point Functions？"></a>什麼是 Entry-Point Functions？</h3><p>首先我上次寫 C 語言已經是八年前的事情，我剩下的印象就是「恐怖」、「指標很可怕」。不過 MATLAB 的好處，就是有提供詳細的說明，大家可以去看看。</p>
+<p>連結：<a href="https://www.mathworks.com/help/rtw/ug/configure-c-code-generation-for-model-entry-point-functions.html">https://www.mathworks.com/help/rtw/ug/configure-c-code-generation-for-model-entry-point-functions.html</a></p>
+<h3 id="決定輸入參數的資料型態"><a href="#決定輸入參數的資料型態" class="headerlink" title="決定輸入參數的資料型態"></a>決定輸入參數的資料型態</h3><p>在 MATLAB 裡，這個函式吃進去的參數是 RGB 色版的陣列，所以應該是類似於 3 維陣列的 tensor 形式。但是呢……</p>
+<p><img src="https://i.imgur.com/YiZEdYw.png" alt="Image"><br><img src="https://i.imgur.com/QlVini6.png" alt="Image"></p>
+<p>他只有 Matrix 形式耶……那我就會被卡在這裡了。好就算我這裡先用成 2 維型式，但接下來還是有別的事情。</p>
+<h3 id="選擇編譯的-compiler"><a href="#選擇編譯的-compiler" class="headerlink" title="選擇編譯的 compiler"></a>選擇編譯的 compiler</h3><p>首先會要你選擇你是要在哪類裝置上進行</p>
+<p><img src="https://i.imgur.com/fjfQEWI.png" alt="Image"></p>
+<p>如果選擇 None 的話，接下來會繼續選裝置內容</p>
+<p><img src="https://i.imgur.com/Qdu45Qe.png" alt="Image"></p>
+<p>以及選擇你要的 Compiler，這可能問題相對沒那麼大。</p>
+<p><img src="https://i.imgur.com/XvjXhhu.png" alt="Image"></p>
+<p>這邊我根本不知道怎麼選，於是最後編譯時就過不去了。</p>
+<h3 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h3><p>這邊非常吃你對於硬體的理解。那我覺得麻煩的是：如果是跟硬體有關係，那麼我想放到手機上，手機我記得是 arm 吧？可是會不會不同手機會有不同的差異呢？會不會中國那邊習慣用的手機又是不一樣的？然後 ImageProcess Tool 又是 MATLAB 獨有的工具，如果程式碼裡有用到他的函式，那有可能會全部輸出讓我們用嗎？可惜後者無法驗證，因為光是前者就過不去了，唉唉。</p>
+]]></content>
+      <categories>
+        <category>Academic</category>
+      </categories>
+      <tags>
+        <tag>Image process</tag>
+        <tag>NDK</tag>
+        <tag>MATLAB</tag>
       </tags>
   </entry>
   <entry>
